@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .headline {
+            padding: 40px 40px 20px;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .social {
+            padding: 0 40px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .social a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .social a:hover {
+            text-decoration: underline;
+        }
+
+        .intro {
+            padding: 40px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8em;
+            line-height: 1.6;
+        }
+
+        .selectors {
+            display: flex;
+            gap: 20px;
+        }
+
+        .selector-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            padding: 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .selector-btn:hover {
+            color: #999;
+        }
+
+        .selector-btn.active {
+            color: #666;
+        }
+
+        .content {
+            padding: 60px;
+            min-height: 400px;
+            font-size: 1.2em;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .content h2 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .content h3 {
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer {
+            padding: 20px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-badge {
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: 10px 20px;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="headline">Rajveer Singh Sandhu</div>
+        <div class="social">
+            <a href="https://www.github.com/BoxCosplayer">GitHub</a>
+            <a href="https://www.linkedin.com/in/rajveer-sandhu-cyberdev/">LinkedIn</a>
+            <a href="mailto:rajveer@sandhuhome.uk">Email</a>
+            <a href="https://www.overleaf.com/read/znnmtwjpgmfb#4172dc">Resume/CV</a>
+        </div>
+    </div>
+
+    <div class="intro">
+        Cyber Security student with a strong foundation in emerging technologies, focused on robust, testable software.
+        Drawing on experience across the UK Defence ecosystem, I turn complex risks into production-ready solutions with
+        a focus on secure development practices.
+    </div>
+
+    <div class="selectors">
+        <button class="selector-btn" onclick="showContent('experience')">Experience</button>
+        <button class="selector-btn active" onclick="showContent('projects')">Projects</button>
+        <button class="selector-btn" onclick="showContent('events')">Professional Events</button>
+    </div>
+
+    <div class="selectors">
+        <button class="selector-btn" onclick="showContent('skills')">Skills</button>
+        <button class="selector-btn" onclick="showContent('fit')">Where do I fit best</button>
+    </div>
+
+    <div class="content" id="contentArea">
+        <h2>Featured Projects</h2>
+        <h3>GOatpad - Vim-like Text Editor</h3>
+        <p>Text editor built using Golang with vim-like functionality. Hardened every feature with thorough testing,
+            implemented PR-level AI code reviews with feature branches, and developed alongside a Language server with
+            IDE features. Technologies: Golang, Graphite</p>
+
+        <h3>Powered Learning - Study Planning Web App</h3>
+        <p>Web app using Subject-Recommender to generate dynamic study plans with subject performance and biases. Helps
+            those with exam anxiety choose what to study, harnesses large datasets with complex weighting system, and
+            deploys dynamic job queues to handle many API requests. Technologies: PHP, Laravel, PostgreSQL, Python</p>
+
+        <h3>Go-Search-Engine - Self-hosted URL Shortcuts</h3>
+        <p>Lightweight, self-hosted "go links" server that replaces bookmarks with URL shortcuts. Maintained with CI/CD
+            enforcing security and functionality, integrated Opensearch support for dynamic searching, with full Docker
+            support. Technologies: Python (Flask), Opensearch, SQLite</p>
+    </div>
+
+    <div class="footer">
+        <div class="footer-badge">256kb club</div>
+        <a href="https://250kb.club/">What is the 256kb club?</a>
+    </div>
+
+    <script>
+        const content = {
+            experience: `
+                <h2>Work Experience</h2>
+                <h3>A*STAR Institute of High Performance Computing (October 2025 — Current)</h3>
+                <p>Developer & Statistical Research Officer - Recipient of prestigious Singapore International Pre-graduate Award. Compiled research across quantum products, analyzing and improving optimization implementations. Worked on quantum advantage domain in AI and Encryption, verifying results using simulators and quantum computers. Engineered internal tools and tutorials to express capabilities to potential customers.</p>
+                
+                <h3>UK Software-Delivery Company (June 2025 — September 2025)</h3>
+                <p>Software Engineering Intern - Team software development project building a Python client for a mobile service using capture data. Headlined consistent meetings with seniors and team members, followed key agile principles, and maintained core business infrastructure to expand testing capabilities.</p>
+                
+                <h3>Powered Tutoring (September 2024 — June 2025)</h3>
+                <p>Co-founder and Chief Financial Officer - Co-founded a tutoring business focused on providing personalized, high-quality academic support. Handled finances including budgeting and financial forecasting, developed personalized tutoring programs across STEM subjects, and grew the business through social media optimization.</p>
+                
+                <h3>QinetiQ (June 2024 — September 2024)</h3>
+                <p>Developer & Quantum Capabilities Research Intern - Researched and evaluated upcoming quantum computing technologies for use within the UK Defence sector. Constructed reports on Quantum Photonics for machine learning algorithms, developed QAOA solutions for binary optimization problems, and investigated potential of quantum computing technologies.</p>
+            `,
+            projects: `
+                <h2>Featured Projects</h2>
+                <h3>GOatpad - Vim-like Text Editor</h3>
+                <p>Text editor built using Golang with vim-like functionality. Hardened every feature with thorough testing, implemented PR-level AI code reviews with feature branches, and developed alongside a Language server with IDE features. Technologies: Golang, Graphite</p>
+                
+                <h3>Powered Learning - Study Planning Web App</h3>
+                <p>Web app using Subject-Recommender to generate dynamic study plans with subject performance and biases. Helps those with exam anxiety choose what to study, harnesses large datasets with complex weighting system, and deploys dynamic job queues to handle many API requests. Technologies: PHP, Laravel, PostgreSQL, Python</p>
+                
+                <h3>Go-Search-Engine - Self-hosted URL Shortcuts</h3>
+                <p>Lightweight, self-hosted "go links" server that replaces bookmarks with URL shortcuts. Maintained with CI/CD enforcing security and functionality, integrated Opensearch support for dynamic searching, with full Docker support. Technologies: Python (Flask), Opensearch, SQLite</p>
+                
+                <h3>ACME Furniture - DevSecOps Project</h3>
+                <p>Modular, full-stack web application using Blazor built with enterprise-scale maintainability. Implemented automated SAST and built reports with DAST, tested against vulnerability scanners such as OWASP ZAP. Technologies: Blazor, C#, .NET, Azure, Microsoft SQL Server, Snyk, OWASP ZAP</p>
+                
+                <h3>Request Forwarder - Network Infrastructure Tool</h3>
+                <p>Information-gathering client against an obfuscated service. Analyzed packet capture data, architected complex network pipeline for testing, and containerized solution for consistent verification. Technologies: Python (HTTPX, MITMproxy, pytest), Wireshark, Proxmox</p>
+            `,
+            events: `
+                <h2>Professional Events & Activities</h2>
+                <h3>NATO CA2X2 Forum 2025 (September 2025)</h3>
+                <p>Researcher & Presenter - Delivered presentation about the intersection of AI and decision-making. Briefed NATO members on upcoming integration between AI and critical decision-making within MDO. Delivered professional presentation to hundreds of people and excelled utilizing key networking opportunities while maintaining engagement and accessibility.</p>
+                
+                <h3>UK STEM Ambassador (May 2024 — February 2025)</h3>
+                <p>Ambassador & Mentor - Inspired and supported young learners in STEM fields within local community. Delivered engaging workshops, hands-on experiments, and coding sessions to foster practical skills. Led career discussions exposing students to diverse career paths and provided mentorship to students aged 15-18.</p>
+                
+                <h3>Cyber 9/12 Strategy Challenge (December 2023 — March 2024)</h3>
+                <p>Geneva Challenge Participant - Competed in two international cyber security challenges run by the Atlantic Council. Collaborated with University and Government officials to synthesize potential new cyber policies among fictional crises. Reached the Semi-final round in the Geneva Challenge and Quarter-Final in the UK Challenge.</p>
+                
+                <h3>Cyberfirst Summer Courses (2019, 2020, 2021 & 2022)</h3>
+                <p>Participant - Learned fundamentals of different Cyber Security fields and concepts. Gained knowledge in cybersecurity principles including network security, cryptography, and intelligence gathering. Developed practical skills through hands-on projects and labs, and built understanding of ethical, legal, and professional responsibilities in cybersecurity.</p>
+            `,
+            skills: `
+                <h2>Technical Skills</h2>
+                <h3>Languages & Backend</h3>
+                <p>Python, C#, PHP, Go, SQL (SQLite, SSMS, PostgreSQL), Lua, NASM</p>
+                
+                <h3>UIs & Frontend</h3>
+                <p>TypeScript/JavaScript, Laravel, Blazor, bubbletea (Go), pygame</p>
+                
+                <h3>Infrastructure & DevOps</h3>
+                <p>Microsoft Azure, Docker, AWS, Proxmox, GitHub Actions, DNSMasq</p>
+                
+                <h3>Cyber Security Tools</h3>
+                <p>OWASP ZAP, Snyk, Wireshark, mitmproxy, Autopsy, Ghidra, Bash/Unix scripting, OSINT tools</p>
+                
+                <h3>Quantum Optimization Technologies</h3>
+                <p>Qiskit, OpenQASM 2.0, qibo, MATLAB</p>
+                
+                <h3>Other Interests</h3>
+                <p>Digital Photography, Reading, Hiking, Baking, Retro tech restoration</p>
+            `,
+            fit: `
+                <h2>Where I Fit Best</h2>
+                <p>I thrive in environments that value dependability-first designs, secure development practices, and continuous learning. My ideal role combines technical challenges in cyber security and emerging technologies with opportunities to contribute to architectural decisions and strengthen functional safety.</p>
+                
+                <p>With experience across the UK Defence ecosystem and quantum computing research, I'm particularly well-suited for teams working on cutting-edge security challenges, quantum technologies, or infrastructure development. Whether it's a research-focused role exploring emerging technologies or a development position building secure, production-ready solutions, I bring both technical expertise and a passion for turning complex risks into robust systems.</p>
+                
+                <p>I also have experience in policy work, having presented to NATO audiences on AI decision-making and competed in international cyber security strategy challenges. This makes me well-positioned for roles at the intersection of technology and governance.</p>
+            `
+        };
+
+        function showContent(section) {
+            document.getElementById('contentArea').innerHTML = content[section];
+
+            document.querySelectorAll('.selector-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+
+</html>
