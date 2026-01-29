@@ -1,274 +1,772 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rajveer Singh Sandhu, Security Engineer</title>
+  <script>
+    document.documentElement.classList.add("js");
+  </script>
+  <style>
+    :root {
+      --bg: #f7f1e8;
+      --accent: #fff3e8;
+      --orange: #f15a24;
+      --ink: #1e1b16;
+      --muted: #5c5247;
+      --line: #e5d6c7;
+    }
 
-        body {
-            background: #000;
-            color: #fff;
-            font-family: system-ui, -apple-system, sans-serif;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        .header {
-            margin-bottom: 20px;
-            text-align: center;
-        }
+    body {
+      margin: 0;
+      font-family: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      background-image: radial-gradient(900px 480px at 80% -20%,
+          rgba(241, 90, 36, 0.18),
+          transparent 60%),
+        radial-gradient(600px 420px at -10% 20%,
+          rgba(241, 90, 36, 0.08),
+          transparent 55%);
+    }
 
-        .headline {
-            padding: 40px 40px 20px;
-            font-size: 2.5em;
-            font-weight: bold;
-        }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        .social {
-            padding: 0 40px 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-        }
+    .wrap {
+      width: min(1080px, 92vw);
+      margin: 0 auto;
+      padding: 48px 0 80px;
+    }
 
-        .social a {
-            color: #fff;
-            text-decoration: none;
-        }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 48px;
+    }
 
-        .social a:hover {
-            text-decoration: underline;
-        }
+    .brand {
+      display: grid;
+      gap: 4px;
+    }
 
-        .intro {
-            padding: 40px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 1.8em;
-            line-height: 1.6;
-        }
+    .brand span {
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 11px;
+      color: var(--muted);
+    }
 
-        .selectors {
-            display: flex;
-            gap: 20px;
-        }
+    .brand strong {
+      font-size: 22px;
+    }
 
-        .selector-btn {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: #fff;
-            padding: 30px;
-            font-size: 1.3em;
-            font-weight: bold;
-            text-decoration: underline;
-            cursor: pointer;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 14px;
+      color: var(--muted);
+    }
 
-        .selector-btn:hover {
-            color: #999;
-        }
+    .nav-links a {
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+    }
 
-        .selector-btn.active {
-            color: #666;
-        }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: center;
+    }
 
-        .content {
-            padding: 60px;
-            min-height: 400px;
-            font-size: 1.2em;
-            line-height: 1.8;
-            text-align: center;
-        }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      font-size: 11px;
+      color: var(--muted);
+      margin: 0 0 14px;
+    }
 
-        .content h2 {
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
+    h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.05;
+      margin: 0 0 16px;
+    }
 
-        .content h3 {
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-size: 1.4em;
-        }
+    .lede {
+      font-size: 17px;
+      color: var(--muted);
+      margin: 0 0 24px;
+    }
 
-        .content p {
-            margin-bottom: 15px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
 
-        .footer {
-            padding: 20px;
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-        }
+    .btn {
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--orange);
+      font-weight: 600;
+      font-size: 14px;
+    }
 
-        .footer-badge {
-            font-size: 1.2em;
-            font-weight: bold;
-            padding: 10px 20px;
-        }
+    .btn.primary {
+      background: var(--orange);
+      color: #fffaf6;
+    }
 
-        .footer a {
-            color: #fff;
-            text-decoration: underline;
-        }
-    </style>
+    .btn.ghost {
+      background: transparent;
+      color: var(--orange);
+    }
+
+    .hero-card {
+      background: var(--accent);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 18px;
+      display: grid;
+      gap: 16px;
+      box-shadow: 0 24px 40px rgba(62, 38, 15, 0.08);
+    }
+
+    .portrait {
+      aspect-ratio: 4 / 5;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #f9c6a9, #f7a07c);
+    }
+
+    .img-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 1;
+      transition: opacity 200ms ease;
+    }
+
+    .js .img-wrap img {
+      opacity: 0;
+    }
+
+    .js .img-wrap.is-loaded img {
+      opacity: 1;
+    }
+
+    .throbber {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(255, 250, 244, 0.7);
+      transition: opacity 200ms ease;
+    }
+
+    .js .throbber {
+      display: grid;
+    }
+
+    .throbber::after {
+      content: "";
+      width: 30px;
+      height: 30px;
+      border: 3px solid rgba(92, 82, 71, 0.35);
+      border-top-color: var(--orange);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .img-wrap.is-loaded .throbber {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+    }
+
+    .section {
+      margin-top: 72px;
+    }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .work-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .work-card {
+      background: #fffaf4;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      display: grid;
+    }
+
+    .thumb {
+      height: 160px;
+      background: linear-gradient(135deg, #f7b494, #f3c28e);
+    }
+
+    .work-body {
+      padding: 16px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .work-body span {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .work-body strong {
+      font-size: 18px;
+    }
+
+    .work-body p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toggle {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: var(--accent);
+      border: 1px solid var(--line);
+      padding: 8px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+
+    .toggle button {
+      border: none;
+      background: transparent;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .toggle button.is-active {
+      background: var(--orange);
+      color: #fffaf6;
+    }
+
+    .panel {
+      display: grid;
+      gap: 16px;
+    }
+
+    .panel[hidden] {
+      display: none;
+    }
+
+    .item {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fffaf4;
+      display: grid;
+      gap: 6px;
+    }
+
+    .item strong {
+      font-size: 16px;
+    }
+
+    .item span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .item ul {
+      margin: 6px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .item ul li {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .item ul li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--orange);
+      box-shadow: 0 0 0 3px rgba(241, 90, 36, 0.12);
+    }
+
+    .cta {
+      margin-top: 72px;
+      background: var(--orange);
+      color: #fffaf6;
+      border-radius: 26px;
+      padding: 32px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .cta h3 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .cta p {
+      margin: 0;
+      font-size: 15px;
+      color: #fff1e7;
+    }
+
+    .cta .btn {
+      border-color: #fffaf6;
+      color: #fffaf6;
+    }
+
+    .footer {
+      margin-top: 48px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .reveal {
+      opacity: 0;
+      animation: rise 0.7s ease forwards;
+      animation-delay: var(--d, 0s);
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        animation: none;
+        opacity: 1;
+      }
+
+      .throbber::after {
+        animation: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="header">
-        <div class="headline">Rajveer Singh Sandhu</div>
-        <div class="social">
-            <a href="https://www.github.com/BoxCosplayer">GitHub</a>
-            <a href="https://www.linkedin.com/in/rajveer-sandhu-cyberdev/">LinkedIn</a>
-            <a href="mailto:rajveer@sandhuhome.uk">Email</a>
-            <a href="https://www.overleaf.com/read/znnmtwjpgmfb#4172dc">Resume/CV</a>
+  <!-- Header -->
+  <div class="wrap">
+    <nav class="nav reveal" style="--d: 0s">
+      <div class="brand">
+        <!-- Unsure whether to include this if at all, mostly for styling -->
+        <!-- <span>Portfolio</span> -->
+        <strong>Rajveer Singh Sandhu</strong>
+        <span>Wolverhampton, United Kingdom</span>
+      </div>
+      <div class="nav-links">
+        <a href="mailto:rajveer@sandhuhome.uk">Email</a>
+        <a href="https://www.linkedin.com/in/rajveer-sandhu-cyberdev">Linkedin</a>
+        <a href="https://www.github.com/BoxCosplayer">Github</a>
+      </div>
+    </nav>
+
+    <!-- Headline -->
+    <section class="hero">
+      <div class="reveal" style="--d: 0.1s">
+        <p class="eyebrow">Aspiring Security Engineer</p>
+        <h1> Turning complex risks into production ready solutions.</h1>
+        <p class="lede">
+          I build software that works, focusing on functionality & accessibility.
+        </p>
+        <div class="actions">
+          <a class="btn primary" href="mailto:rajveer@sandhuhome.uk">Get in touch</a>
+          <a class="btn ghost" href="#">Download CV</a>
         </div>
-    </div>
+      </div>
+      <div class="hero-card reveal" style="--d: 0.2s">
+        <div class="portrait img-wrap">
+          <div class="throbber" aria-hidden="true"></div>
+          <img src="images/portrait.jpg" alt="Portrait of Rajveer Singh Sandhu" loading="lazy" decoding="async">
+        </div>
+        <div class="card-meta">
+          <span>Open to work</span>
+          <span>2026</span>
+        </div>
+      </div>
+    </section>
 
-    <div class="intro">
-        Cyber Security student with a strong foundation in emerging technologies, focused on robust, testable software.
-        Drawing on experience across the UK Defence ecosystem, I turn complex risks into production-ready solutions with
-        a focus on secure development practices.
-    </div>
+    <!-- Projects carusel -->
+    <section id="work" class="section">
+      <div class="section-head reveal" style="--d: 0.1s">
+        <h2>Projects</h2>
+      </div>
+      <div class="work-grid">
+        <!-- Goatpad -->
+        <article class="work-card reveal" style="--d: 0.15s">
+          <div class="thumb img-wrap">
+            <div class="throbber" aria-hidden="true"></div>
+            <img src="images/project-01.jpg" alt="Goatpad text-editor thumbnail" loading="lazy" decoding="async">
+          </div>
+          <div class="work-body">
+            <span>Personal Project</span>
+            <strong>GOatpad</strong>
+            <p>Vim-like text editor, built using Golang.</p>
+          </div>
+        </article>
 
-    <div class="selectors">
-        <button class="selector-btn" onclick="showContent('experience')">Experience</button>
-        <button class="selector-btn active" onclick="showContent('projects')">Projects</button>
-        <button class="selector-btn" onclick="showContent('events')">Professional Events</button>
-    </div>
+        <!-- qiboopt -->
+        <article class="work-card reveal" style="--d: 0.2s">
+          <div class="thumb img-wrap">
+            <div class="throbber" aria-hidden="true"></div>
+            <img src="images/project-02.jpg" alt="qibo project thumbnail" loading="lazy" decoding="async">
+          </div>
+          <div class="work-body">
+            <span>Open Source</span>
+            <strong>'qibo' python library</strong>
+            <p>Worked on 'qiboopt', the quantum optimisation plugin.
+            </p>
+          </div>
+        </article>
 
-    <div class="selectors">
-        <button class="selector-btn" onclick="showContent('skills')">Skills</button>
-        <button class="selector-btn" onclick="showContent('fit')">Where do I fit best</button>
-    </div>
+        <!-- Go Search Engine -->
+        <article class="work-card reveal" style="--d: 0.25s">
+          <div class="thumb img-wrap">
+            <div class="throbber" aria-hidden="true"></div>
+            <img src="images/project-03.jpg" alt="Go-search-engine project thumbnail" loading="lazy" decoding="async">
+          </div>
+          <div class="work-body">
+            <span>Personal Project</span>
+            <strong>Go Search Engine</strong>
+            <p>Self-hosted Keyword->URL redirect engine.</p>
+          </div>
+        </article>
 
-    <div class="content" id="contentArea">
-        <h2>Featured Projects</h2>
-        <h3>GOatpad - Vim-like Text Editor</h3>
-        <p>Text editor built using Golang with vim-like functionality. Hardened every feature with thorough testing,
-            implemented PR-level AI code reviews with feature branches, and developed alongside a Language server with
-            IDE features. Technologies: Golang, Graphite</p>
+        <!-- PL -->
+        <article class="work-card reveal" style="--d: 0.25s">
+          <div class="thumb img-wrap">
+            <div class="throbber" aria-hidden="true"></div>
+            <img src="images/project-03.jpg" alt="Powered-Learning project thumbnail" loading="lazy" decoding="async">
+          </div>
+          <div class="work-body">
+            <span>Future Product</span>
+            <strong>Powered Learning</strong>
+            <p>Product to help students decide <i>what</i> to study, not just when.</p>
+          </div>
+        </article>
 
-        <h3>Powered Learning - Study Planning Web App</h3>
-        <p>Web app using Subject-Recommender to generate dynamic study plans with subject performance and biases. Helps
-            those with exam anxiety choose what to study, harnesses large datasets with complex weighting system, and
-            deploys dynamic job queues to handle many API requests. Technologies: PHP, Laravel, PostgreSQL, Python</p>
+        <!-- language server -->
+        <!-- <article class="work-card reveal" style="--d: 0.25s">
+          <div class="thumb img-wrap">
+            <div class="throbber" aria-hidden="true"></div>
+            <img src="images/project-03.jpg" alt="Language Server project thumbnail" loading="lazy" decoding="async">
+          </div>
+          <div class="work-body">
+            <span>Personal Project</span>
+            <strong>Go Language Server</strong>
+            <p>Language Server for golang, built explicitly to be compatible with GOatpad.</p>
+          </div>
+        </article> -->
 
-        <h3>Go-Search-Engine - Self-hosted URL Shortcuts</h3>
-        <p>Lightweight, self-hosted "go links" server that replaces bookmarks with URL shortcuts. Maintained with CI/CD
-            enforcing security and functionality, integrated Opensearch support for dynamic searching, with full Docker
-            support. Technologies: Python (Flask), Opensearch, SQLite</p>
-    </div>
+      </div>
+    </section>
 
-    <div class="footer">
-        <div class="footer-badge">256kb club</div>
-        <a href="https://250kb.club/">What is the 256kb club?</a>
-    </div>
+    <!-- Timeline sections -->
+    <section id="timeline" class="section">
+      <div class="section-head reveal" style="--d: 0.1s">
+        <h2>Timeline</h2>
+      </div>
+      <div class="toggle reveal" style="--d: 0.15s" role="tablist">
+        <button class="is-active" data-target="experience" aria-controls="experience" aria-selected="true">
+          Experience
+        </button>
+        <button data-target="extra" aria-controls="extra" aria-selected="false">
+          Extracurriculars
+        </button>
+        <button data-target="education" aria-controls="education" aria-selected="false">
+          Education
+        </button>
+      </div>
 
-    <script>
-        const content = {
-            experience: `
-                <h2>Work Experience</h2>
-                <h3>A*STAR Institute of High Performance Computing (October 2025 — Current)</h3>
-                <p>Developer & Statistical Research Officer - Recipient of prestigious Singapore International Pre-graduate Award. Compiled research across quantum products, analyzing and improving optimization implementations. Worked on quantum advantage domain in AI and Encryption, verifying results using simulators and quantum computers. Engineered internal tools and tutorials to express capabilities to potential customers.</p>
-                
-                <h3>UK Software-Delivery Company (June 2025 — September 2025)</h3>
-                <p>Software Engineering Intern - Team software development project building a Python client for a mobile service using capture data. Headlined consistent meetings with seniors and team members, followed key agile principles, and maintained core business infrastructure to expand testing capabilities.</p>
-                
-                <h3>Powered Tutoring (September 2024 — June 2025)</h3>
-                <p>Co-founder and Chief Financial Officer - Co-founded a tutoring business focused on providing personalized, high-quality academic support. Handled finances including budgeting and financial forecasting, developed personalized tutoring programs across STEM subjects, and grew the business through social media optimization.</p>
-                
-                <h3>QinetiQ (June 2024 — September 2024)</h3>
-                <p>Developer & Quantum Capabilities Research Intern - Researched and evaluated upcoming quantum computing technologies for use within the UK Defence sector. Constructed reports on Quantum Photonics for machine learning algorithms, developed QAOA solutions for binary optimization problems, and investigated potential of quantum computing technologies.</p>
-            `,
-            projects: `
-                <h2>Featured Projects</h2>
-                <h3>GOatpad - Vim-like Text Editor</h3>
-                <p>Text editor built using Golang with vim-like functionality. Hardened every feature with thorough testing, implemented PR-level AI code reviews with feature branches, and developed alongside a Language server with IDE features. Technologies: Golang, Graphite</p>
-                
-                <h3>Powered Learning - Study Planning Web App</h3>
-                <p>Web app using Subject-Recommender to generate dynamic study plans with subject performance and biases. Helps those with exam anxiety choose what to study, harnesses large datasets with complex weighting system, and deploys dynamic job queues to handle many API requests. Technologies: PHP, Laravel, PostgreSQL, Python</p>
-                
-                <h3>Go-Search-Engine - Self-hosted URL Shortcuts</h3>
-                <p>Lightweight, self-hosted "go links" server that replaces bookmarks with URL shortcuts. Maintained with CI/CD enforcing security and functionality, integrated Opensearch support for dynamic searching, with full Docker support. Technologies: Python (Flask), Opensearch, SQLite</p>
-                
-                <h3>ACME Furniture - DevSecOps Project</h3>
-                <p>Modular, full-stack web application using Blazor built with enterprise-scale maintainability. Implemented automated SAST and built reports with DAST, tested against vulnerability scanners such as OWASP ZAP. Technologies: Blazor, C#, .NET, Azure, Microsoft SQL Server, Snyk, OWASP ZAP</p>
-                
-                <h3>Request Forwarder - Network Infrastructure Tool</h3>
-                <p>Information-gathering client against an obfuscated service. Analyzed packet capture data, architected complex network pipeline for testing, and containerized solution for consistent verification. Technologies: Python (HTTPX, MITMproxy, pytest), Wireshark, Proxmox</p>
-            `,
-            events: `
-                <h2>Professional Events & Activities</h2>
-                <h3>NATO CA2X2 Forum 2025 (September 2025)</h3>
-                <p>Researcher & Presenter - Delivered presentation about the intersection of AI and decision-making. Briefed NATO members on upcoming integration between AI and critical decision-making within MDO. Delivered professional presentation to hundreds of people and excelled utilizing key networking opportunities while maintaining engagement and accessibility.</p>
-                
-                <h3>UK STEM Ambassador (May 2024 — February 2025)</h3>
-                <p>Ambassador & Mentor - Inspired and supported young learners in STEM fields within local community. Delivered engaging workshops, hands-on experiments, and coding sessions to foster practical skills. Led career discussions exposing students to diverse career paths and provided mentorship to students aged 15-18.</p>
-                
-                <h3>Cyber 9/12 Strategy Challenge (December 2023 — March 2024)</h3>
-                <p>Geneva Challenge Participant - Competed in two international cyber security challenges run by the Atlantic Council. Collaborated with University and Government officials to synthesize potential new cyber policies among fictional crises. Reached the Semi-final round in the Geneva Challenge and Quarter-Final in the UK Challenge.</p>
-                
-                <h3>Cyberfirst Summer Courses (2019, 2020, 2021 & 2022)</h3>
-                <p>Participant - Learned fundamentals of different Cyber Security fields and concepts. Gained knowledge in cybersecurity principles including network security, cryptography, and intelligence gathering. Developed practical skills through hands-on projects and labs, and built understanding of ethical, legal, and professional responsibilities in cybersecurity.</p>
-            `,
-            skills: `
-                <h2>Technical Skills</h2>
-                <h3>Languages & Backend</h3>
-                <p>Python, C#, PHP, Go, SQL (SQLite, SSMS, PostgreSQL), Lua, NASM</p>
-                
-                <h3>UIs & Frontend</h3>
-                <p>TypeScript/JavaScript, Laravel, Blazor, bubbletea (Go), pygame</p>
-                
-                <h3>Infrastructure & DevOps</h3>
-                <p>Microsoft Azure, Docker, AWS, Proxmox, GitHub Actions, DNSMasq</p>
-                
-                <h3>Cyber Security Tools</h3>
-                <p>OWASP ZAP, Snyk, Wireshark, mitmproxy, Autopsy, Ghidra, Bash/Unix scripting, OSINT tools</p>
-                
-                <h3>Quantum Optimization Technologies</h3>
-                <p>Qiskit, OpenQASM 2.0, qibo, MATLAB</p>
-                
-                <h3>Other Interests</h3>
-                <p>Digital Photography, Reading, Hiking, Baking, Retro tech restoration</p>
-            `,
-            fit: `
-                <h2>Where I Fit Best</h2>
-                <p>I thrive in environments that value dependability-first designs, secure development practices, and continuous learning. My ideal role combines technical challenges in cyber security and emerging technologies with opportunities to contribute to architectural decisions and strengthen functional safety.</p>
-                
-                <p>With experience across the UK Defence ecosystem and quantum computing research, I'm particularly well-suited for teams working on cutting-edge security challenges, quantum technologies, or infrastructure development. Whether it's a research-focused role exploring emerging technologies or a development position building secure, production-ready solutions, I bring both technical expertise and a passion for turning complex risks into robust systems.</p>
-                
-                <p>I also have experience in policy work, having presented to NATO audiences on AI decision-making and competed in international cyber security strategy challenges. This makes me well-positioned for roles at the intersection of technology and governance.</p>
-            `
-        };
+      <!-- Experience section -->
+      <div class="panel reveal" style="--d: 0.2s" id="experience">
 
-        function showContent(section) {
-            document.getElementById('contentArea').innerHTML = content[section];
+        <!-- A*STAR -->
+        <div class="item">
+          <strong>Statistical Research Officer, A*STAR Institute of High Performance Computing </strong>
+          <span>October 2025 - Current | Singapore</span>
+          <p>Recipient of the Singapore International Pre-Graduate Award, giving me paid research experience in
+            Singapore.</p>
+          <ul>
+            <li>Worked on a variety of optimisation projects, pushing the quantum advantage domain in AI and Encryption.
+            </li>
+            <li>Compiled research across a multitude of quantum products, analysing and improving their optimisation
+              implementations</li>
+            <li>Engineered small internal tools and tutorials to express capabilities to potential customers.</li>
+          </ul>
+        </div>
 
-            document.querySelectorAll('.selector-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
+        <!-- Anon -->
+        <div class="item">
+          <strong>Software Engineering Intern, UK Software-Delivery Company</strong>
+          <span>June - September 2025 | Cheltenham, United Kindom</span>
+          <p>Team Software Development project to build a python client for a mobile service using capture data.</p>
+          <ul>
+            <li>Headlined consistent meetings with seniors and team members to discuss progress.
+            </li>
+            <li>Followed key agile principles while working with delivery teams to ensure business compliance standards.
+            </li>
+            <li>Maintained and Expanded core business infrastructure to expand testing capabilities.</li>
+          </ul>
+        </div>
+
+        <!-- PT -->
+        <div class="item">
+          <strong>Co-founder and Chief Financial Officer, Powered Tutoring </strong>
+          <span>September 2024 - June 2025 | Birmingham, United Kingdom</span>
+          <p>Co-founded a tutoring business focused on providing personalized, high-quality academic support.</p>
+          <ul>
+            <li>Handled the company’s finances, including budgeting and financial forecasting to ensure profitability.
+            </li>
+            <li>Developed personalized tutoring programs, focusing on student needs and academic goals across STEM and
+              other core subjects.</li>
+            <li>Engaged in marketing and client acquisition, successfully growing the business with social media
+              optimisation.</li>
+          </ul>
+        </div>
+
+        <!-- QQ -->
+        <div class="item">
+          <strong>Cyber Summer Placement Student, QinetiQ </strong>
+          <span>June - September 2024 | Malvern, United Kingdom</span>
+          <p>Co-founded a tutoring business focused on providing personalized, high-quality academic support.</p>
+          <ul>
+            <li>Constructed and presented a report on the viability of Quantum Photonics for machine learning
+              algorithms.
+            </li>
+            <li>Developed QAOA solutions to solve binary optimisation problems, with applications within the national
+              defence sector.</li>
+            <li>Investigated and realised the potential of a multitude of quantum computing technologies.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Extracurriculars section -->
+      <div class="panel reveal" style="--d: 0.2s" id="extra" hidden>
+        <!-- NATO -->
+        <div class="item">
+          <strong>NATO CA2X2 Forum 2025</strong>
+          <span>September 2025</span>
+          <p>Delivered a presentation about the intersection of LLMs and decision-making at NATO CA2X2 Forum 2025.</p>
+          <ul>
+            <li>Briefed NATO members for the upcoming integration between AI and critical decision-making within MDO.
+            </li>
+            <li>Delivered a professional presentation to 100s of people & excelled utilising key networking
+              opportunities.</li>
+            <li>Continuously kept engagement & accessibility in mind, minimising information density.</li>
+          </ul>
+        </div>
+
+        <!-- STEM Ambassador -->
+        <div class="item">
+          <strong>UK STEM Ambassador & Mentor</strong>
+          <span>September 2024 - February 2025</span>
+          <p>Inspired and supported young learners in STEM fields within my local community.</p>
+          <ul>
+            <li>Delivered engaging workshops, hands-on experiments, and coding sessions to foster practical skills.
+            </li>
+            <li>Led career discussions to expose students to diverse career paths, featuring guest speakers from
+              industry and academia.</li>
+            <li>Provided mentorship to students aged 15-18 with career advice and skill-building exercises.</li>
+          </ul>
+        </div>
+
+        <!-- Geneva 9/12 Challenge -->
+        <div class="item">
+          <strong>International Cyber 9/12 Strategy Challenge, Geneva</strong>
+          <span>2024 - Now</span>
+          <p>Competed in two international cyber security challenges run by the Atlantic Council.</p>
+          <ul>
+            <li>Collaborated with University and Government officials to synthesize potential new cyber policies among
+              fictional crises.
+            </li>
+            <li>Acquainted myself with international security policies and regulations to develop informed and strategic
+              recommendations.</li>
+            <li>Reached the Semi-final round in the Geneva Challenge and Quarter-Final in the UK Challenge.</li>
+          </ul>
+        </div>
+
+        <!-- CF Summers -->
+        <div class="item">
+          <strong>CyberFirst Summer Courses</strong>
+          <span>Summers 2019, 2020, 2021 & 2022</span>
+          <p>Learnt the fundamentals of different Cyber Security fields and concepts.</p>
+          <ul>
+            <li>Gained knowledge in cybersecurity principles, including network security, cryptography, and intelligence
+              gathering.
+            </li>
+            <li>Developed practical skills through hands-on projects and labs, such as penetration testing and building
+              secure systems.</li>
+            <li>Built an understanding of the ethical, legal, and professional responsibilities in the field of
+              cybersecurity.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Education section -->
+      <div class="panel reveal" style="--d: 0.2s" id="education" hidden>
+        <div class="item">
+          <strong>BSc Cyber Security</strong>
+          <span>University of Warwick | 2023 - 2027</span>
+          <ul>
+            <li>Explored how to design, build and maintain secure systems.</li>
+            <li>Worked with and secured large-scale networks, databases and web applications.</li>
+            <li>Designed bespoke cyber policy and risk assurance designs for fictional companies.</li>
+            <li>Deeply analysed the human factor within cyber, focusing on the psychology behind risks and attacks.</li>
+            <li>Evaluated the cyber posture of an organisation’s cyber security management.</li>
+            <li>Proposed a theory-informed intervention appraising the role of human factors in delivering security.
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>Proudly under 14kb. <a href="https://endtimes.dev/why-your-website-should-be-under-14kb-in-size/">Why does
+          this matter?</a></span>
+      <span>United Kingdom, remote friendly.</span>
+    </footer>
+  </div>
+
+  <!-- JS -->
+  <script>
+    const tabs = document.querySelectorAll(".toggle button");
+    const panels = document.querySelectorAll(".panel");
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((t) => {
+          t.classList.remove("is-active");
+          t.setAttribute("aria-selected", "false");
+        });
+        panels.forEach((panel) => panel.setAttribute("hidden", "true"));
+        tab.classList.add("is-active");
+        tab.setAttribute("aria-selected", "true");
+        const target = document.getElementById(tab.dataset.target);
+        if (target) {
+          target.removeAttribute("hidden");
         }
-    </script>
+      });
+    });
+
+    const images = document.querySelectorAll(".img-wrap img");
+    images.forEach((img) => {
+      const wrap = img.closest(".img-wrap");
+      if (!wrap) {
+        return;
+      }
+      const markLoaded = () => wrap.classList.add("is-loaded");
+      if (img.complete && img.naturalWidth > 0) {
+        markLoaded();
+        return;
+      }
+      img.addEventListener("load", markLoaded, { once: true });
+      img.addEventListener("error", markLoaded, { once: true });
+    });
+  </script>
 </body>
 
 </html>
