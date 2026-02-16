@@ -1090,6 +1090,67 @@
 
   <!-- JS -->
   <script>
+    const headshots = [
+      {
+        src: "images/headshot-portrait.jpg",
+        alt: "Portrait of Rajveer Singh Sandhu"
+      },
+      {
+        src: "images/headshot-mii.png",
+        alt: "Mii-style portrait of Rajveer Singh Sandhu"
+      },
+      {
+        src: "images/headshot-nato.jpg",
+        alt: "Rajveer Singh Sandhu at the NATO CA2X2 Forum 2025"
+      }
+    ];
+
+    const preloadImage = (src) =>
+      new Promise((resolve) => {
+        if (!src) {
+          resolve();
+          return;
+        }
+
+        const image = new Image();
+        image.decoding = "async";
+        const done = () => {
+          image.removeEventListener("load", done);
+          image.removeEventListener("error", done);
+          resolve();
+        };
+        image.addEventListener("load", done, { once: true });
+        image.addEventListener("error", done, { once: true });
+        image.src = src;
+      });
+
+    const warmImageCache = () => {
+      const sources = new Set();
+      document.querySelectorAll("img[src]").forEach((img) => {
+        const src = img.getAttribute("src");
+        if (src) {
+          sources.add(src);
+        }
+      });
+      headshots.forEach((shot) => {
+        if (shot.src) {
+          sources.add(shot.src);
+        }
+      });
+
+      void Promise.allSettled(
+        [...sources].map((src) => preloadImage(src))
+      );
+    };
+
+    window.addEventListener("load", () => {
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(warmImageCache, { timeout: 1200 });
+        return;
+      }
+      window.setTimeout(warmImageCache, 150);
+    }, { once: true });
+
     const tabs = document.querySelectorAll(".toggle button");
     const panels = document.querySelectorAll(".panel");
     tabs.forEach((tab) => {
@@ -1126,21 +1187,6 @@
     const headshotImage = document.querySelector("[data-headshot-image]");
     const headshotBuffer = document.querySelector("[data-headshot-buffer]");
     if (headshotImage && headshotBuffer) {
-      const headshots = [
-        {
-          src: "images/headshot-portrait.jpg",
-          alt: "Portrait of Rajveer Singh Sandhu"
-        },
-        {
-          src: "images/headshot-mii.png",
-          alt: "Mii-style portrait of Rajveer Singh Sandhu"
-        },
-        {
-          src: "images/headshot-nato.jpg",
-          alt: "Rajveer Singh Sandhu at the NATO CA2X2 Forum 2025"
-        }
-      ];
-
       const portraitWrap = headshotImage.closest(".portrait");
       let activeImage = headshotImage;
       let bufferImage = headshotBuffer;
