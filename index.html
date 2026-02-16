@@ -321,8 +321,20 @@
 
     .work-grid {
       display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(240px, 1fr);
       gap: 18px;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-left: 2px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 4px;
+    }
+
+    .work-grid::-webkit-scrollbar {
+      display: none;
     }
 
     .work-card {
@@ -331,6 +343,47 @@
       border-radius: 10px;
       overflow: hidden;
       display: grid;
+      scroll-snap-align: start;
+    }
+
+    .projects-head {
+      align-items: center;
+    }
+
+    .carousel-controls {
+      display: none;
+      gap: 10px;
+    }
+
+    .js .carousel-controls {
+      display: inline-flex;
+    }
+
+    .carousel-btn {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fffaf4;
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      font-size: 19px;
+      line-height: 1;
+      cursor: pointer;
+      transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+    }
+
+    .carousel-btn:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    .carousel-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      color: var(--muted);
+      border-color: var(--line);
     }
 
     .thumb {
@@ -544,6 +597,10 @@
         flex-direction: column;
         align-items: flex-start;
       }
+
+      .work-grid {
+        grid-auto-columns: minmax(78vw, 1fr);
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -630,12 +687,16 @@
       </div>
     </section>
 
-    <!-- Projects carusel -->
+    <!-- Projects carousel -->
     <section id="work" class="section">
-      <div class="section-head reveal" style="--d: 0.1s">
+      <div class="section-head projects-head reveal" style="--d: 0.1s">
         <h2>Projects</h2>
+        <div class="carousel-controls" aria-label="Project navigation">
+          <button class="carousel-btn" type="button" data-carousel-prev aria-label="Previous project">&larr;</button>
+          <button class="carousel-btn" type="button" data-carousel-next aria-label="Next project">&rarr;</button>
+        </div>
       </div>
-      <div class="work-grid">
+      <div class="work-grid" data-project-track>
 
         <!-- Goatpad -->
         <article class="work-card reveal" style="--d: 0.15s">
@@ -926,6 +987,41 @@
       img.addEventListener("load", markLoaded, { once: true });
       img.addEventListener("error", markLoaded, { once: true });
     });
+
+    const projectTrack = document.querySelector("[data-project-track]");
+    const projectPrev = document.querySelector("[data-carousel-prev]");
+    const projectNext = document.querySelector("[data-carousel-next]");
+
+    if (projectTrack && projectPrev && projectNext) {
+      const epsilon = 4;
+
+      const getScrollStep = () => {
+        const card = projectTrack.querySelector(".work-card");
+        if (!card) {
+          return projectTrack.clientWidth;
+        }
+        const gap = parseFloat(getComputedStyle(projectTrack).columnGap || "0");
+        return card.getBoundingClientRect().width + gap;
+      };
+
+      const updateProjectButtons = () => {
+        const maxLeft = projectTrack.scrollWidth - projectTrack.clientWidth;
+        projectPrev.disabled = projectTrack.scrollLeft <= epsilon;
+        projectNext.disabled = projectTrack.scrollLeft >= maxLeft - epsilon;
+      };
+
+      projectPrev.addEventListener("click", () => {
+        projectTrack.scrollBy({ left: -getScrollStep(), behavior: "smooth" });
+      });
+
+      projectNext.addEventListener("click", () => {
+        projectTrack.scrollBy({ left: getScrollStep(), behavior: "smooth" });
+      });
+
+      projectTrack.addEventListener("scroll", updateProjectButtons, { passive: true });
+      window.addEventListener("resize", updateProjectButtons);
+      updateProjectButtons();
+    }
   </script>
 </body>
 
