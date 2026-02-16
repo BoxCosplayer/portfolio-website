@@ -235,6 +235,36 @@
       aspect-ratio: 4 / 5;
       border-radius: 18px;
       background: linear-gradient(135deg, #f9c6a9, #f7a07c);
+      position: relative;
+    }
+
+    .portrait .headshot-slide {
+      position: absolute;
+      inset: 0;
+      object-position: center;
+      transform: translateX(100%);
+      opacity: 0;
+      visibility: hidden;
+      transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1), opacity 0ms linear 520ms;
+    }
+
+    .portrait .headshot-slide.is-active {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+      transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .portrait .headshot-slide.is-exiting {
+      transform: translateX(-100%);
+      opacity: 1;
+      visibility: visible;
+      transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .portrait .headshot-slide.is-landscape {
+      object-fit: contain;
+      background: #f1e4d7;
     }
 
     .img-wrap {
@@ -690,7 +720,10 @@
       <div class="hero-card reveal" style="--d: 0.2s">
         <div class="portrait img-wrap">
           <div class="throbber" aria-hidden="true"></div>
-          <img src="images/portrait.jpg" alt="Portrait of Rajveer Singh Sandhu" loading="lazy" decoding="async">
+          <img class="headshot-slide is-active" data-headshot-image src="images/headshot-portrait.jpg" alt="Portrait of Rajveer Singh Sandhu"
+            loading="lazy" decoding="async">
+          <img class="headshot-slide" data-headshot-buffer src="images/headshot-portrait.jpg" alt="" aria-hidden="true"
+            loading="lazy" decoding="async">
         </div>
         <div class="card-meta">
           <span>Open to work</span>
@@ -1087,6 +1120,136 @@
       img.addEventListener("load", markLoaded, { once: true });
       img.addEventListener("error", markLoaded, { once: true });
     });
+
+    const headshotImage = document.querySelector("[data-headshot-image]");
+    const headshotBuffer = document.querySelector("[data-headshot-buffer]");
+    if (headshotImage && headshotBuffer) {
+      const headshots = [
+        {
+          src: "images/headshot-portrait.jpg",
+          alt: "Portrait of Rajveer Singh Sandhu"
+        },
+        {
+          src: "images/headshot-mii.png",
+          alt: "Mii-style portrait of Rajveer Singh Sandhu"
+        },
+        {
+          src: "images/headshot-nato.jpg",
+          alt: "Rajveer Singh Sandhu at the NATO CA2X2 Forum 2025"
+        }
+      ];
+
+      const portraitWrap = headshotImage.closest(".portrait");
+      let activeImage = headshotImage;
+      let bufferImage = headshotBuffer;
+      let headshotIndex = Math.max(
+        headshots.findIndex((shot) => shot.src === headshotImage.getAttribute("src")),
+        0
+      );
+      let headshotTimer;
+      let isAnimating = false;
+      const slideDurationMs = 520;
+
+      const setLandscapeClass = (img) => {
+        if (!img) {
+          return;
+        }
+        const isLandscape = img.naturalWidth > img.naturalHeight;
+        img.classList.toggle("is-landscape", isLandscape);
+      };
+
+      const loadHeadshotInto = (img, shot) =>
+        new Promise((resolve) => {
+          if (!img || !shot) {
+            resolve();
+            return;
+          }
+
+          const onComplete = () => {
+            img.removeEventListener("load", onComplete);
+            img.removeEventListener("error", onComplete);
+            setLandscapeClass(img);
+            resolve();
+          };
+
+          img.alt = shot.alt;
+          if (img.getAttribute("src") === shot.src && img.complete && img.naturalWidth > 0) {
+            onComplete();
+            return;
+          }
+
+          img.addEventListener("load", onComplete, { once: true });
+          img.addEventListener("error", onComplete, { once: true });
+          img.src = shot.src;
+        });
+
+      const showHeadshot = async (nextIndex) => {
+        if (isAnimating) {
+          return;
+        }
+
+        const normalizedIndex = ((nextIndex % headshots.length) + headshots.length) % headshots.length;
+        const nextHeadshot = headshots[normalizedIndex];
+        if (!nextHeadshot) {
+          return;
+        }
+
+        if (normalizedIndex === headshotIndex) {
+          return;
+        }
+
+        isAnimating = true;
+        await loadHeadshotInto(bufferImage, nextHeadshot);
+
+        const outgoingImage = activeImage;
+        const incomingImage = bufferImage;
+
+        outgoingImage.classList.add("is-exiting");
+
+        window.setTimeout(() => {
+          outgoingImage.classList.remove("is-active", "is-exiting");
+          outgoingImage.classList.remove("is-landscape");
+          incomingImage.classList.add("is-active");
+
+          window.setTimeout(() => {
+            activeImage = incomingImage;
+            bufferImage = outgoingImage;
+            headshotIndex = normalizedIndex;
+            isAnimating = false;
+          }, slideDurationMs + 50);
+        }, slideDurationMs + 20);
+      };
+
+      const stopHeadshotAutoplay = () => {
+        window.clearInterval(headshotTimer);
+      };
+
+      const startHeadshotAutoplay = () => {
+        stopHeadshotAutoplay();
+        headshotTimer = window.setInterval(() => {
+          void showHeadshot(headshotIndex + 1);
+        }, 4500);
+      };
+
+      if (headshots.length > 1) {
+        if (headshotImage.complete && headshotImage.naturalWidth > 0) {
+          setLandscapeClass(headshotImage);
+        } else {
+          headshotImage.addEventListener("load", () => setLandscapeClass(headshotImage), { once: true });
+        }
+
+        void loadHeadshotInto(
+          headshotBuffer,
+          headshots[(headshotIndex + 1) % headshots.length]
+        );
+
+        startHeadshotAutoplay();
+        if (portraitWrap) {
+          portraitWrap.addEventListener("mouseenter", stopHeadshotAutoplay);
+          portraitWrap.addEventListener("mouseleave", startHeadshotAutoplay);
+        }
+      }
+    }
 
     const projectTrack = document.querySelector("[data-project-track]");
     const projectPrev = document.querySelector("[data-carousel-prev]");
