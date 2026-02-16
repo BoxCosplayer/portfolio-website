@@ -320,16 +320,20 @@
     }
 
     .work-grid {
+      --project-gap: 18px;
+      --projects-visible: 4;
+      --project-edge-pad: 2px;
       display: grid;
       grid-auto-flow: column;
-      grid-auto-columns: minmax(240px, 1fr);
-      gap: 18px;
+      grid-auto-columns: calc((100% - (2 * var(--project-edge-pad)) - ((var(--projects-visible) - 1) * var(--project-gap))) / var(--projects-visible));
+      gap: var(--project-gap);
       overflow-x: auto;
       overscroll-behavior-inline: contain;
       scroll-snap-type: x mandatory;
-      scroll-padding-left: 2px;
+      scroll-padding-inline: var(--project-edge-pad);
       scrollbar-width: none;
       -ms-overflow-style: none;
+      padding-inline: var(--project-edge-pad);
       padding-bottom: 4px;
     }
 
@@ -393,12 +397,15 @@
     }
 
     .project-sticker {
+      --sticker-size: 42px;
+      --sticker-offset: 10px;
+      --sticker-stack-gap: 8px;
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: var(--sticker-offset);
+      right: var(--sticker-offset);
       z-index: 2;
-      width: 42px;
-      height: 42px;
+      width: var(--sticker-size);
+      height: var(--sticker-size);
       border: 1px solid rgba(229, 214, 199, 0);
       border-radius: 10px;
       background: rgba(255, 250, 244, 0);
@@ -416,6 +423,10 @@
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;
+    }
+
+    .project-sticker.is-secondary {
+      top: calc(var(--sticker-offset) + var(--sticker-size) + var(--sticker-stack-gap));
     }
 
     .work-body {
@@ -668,8 +679,8 @@
                   class="skill-logo-image" src="images/skills/csharp.svg" alt="C# logo" loading="lazy"
                   decoding="async"></span><span class="skill-name">C#</span></li>
             <li><span class="skill-logo img-wrap"><span class="throbber" aria-hidden="true"></span><img
-                  class="skill-logo-image" src="images/skills/dotnet.svg" alt=".NET logo" loading="lazy"
-                  decoding="async"></span><span class="skill-name">.NET</span></li>
+                  class="skill-logo-image" src="images/skills/sqlite.svg" alt="sql logo" loading="lazy"
+                  decoding="async"></span><span class="skill-name">SQL</span></li>
             <li><span class="skill-logo img-wrap"><span class="throbber" aria-hidden="true"></span><img
                   class="skill-logo-image" src="images/skills/elixir.svg" alt="Elixir logo" loading="lazy"
                   decoding="async"></span><span class="skill-name">Elixir</span></li>
@@ -740,12 +751,15 @@
               <div class="throbber" aria-hidden="true"></div>
               <span class="project-sticker" style="--sticker-image: url('images/skills/python.svg');"
                 aria-hidden="true"></span>
+              <span class="project-sticker is-secondary" style="--sticker-image: url('images/skills/docker.svg');"
+                aria-hidden="true"></span>
               <img src="images/go.png" alt="Go-search-engine project thumbnail" loading="lazy" decoding="async">
             </div>
             <div class="work-body">
               <span>Personal Project</span>
               <strong>Go Search Engine</strong>
               <p>Keyword->URL redirect engine.</p>
+              <p>Deployed with Docker.</p>
             </div>
           </a>
         </article>
@@ -767,19 +781,104 @@
           </a>
         </article>
 
-        <!-- PL -->
-        <!-- <article class="work-card reveal" style="--d: 0.25s">
-          <div class="thumb img-wrap">
-            <div class="throbber" aria-hidden="true"></div>
-            <img src="images/project-03.jpg" alt="Powered-Learning project thumbnail" loading="lazy" decoding="async">
-          </div>
-          <div class="work-body">
-            <span>Future Product</span>
-            <strong>Powered Learning</strong>
-            <p>Product to help students decide <i>what</i> to study, not just when.</p>
-          </div>
-        </article> -->
+        <!-- Powered Learning -->
+        <article class="work-card reveal" style="--d: 0.25s">
+          <a href="https://github.com/BoxCosplayer/Powered-Learning">
+            <div class="thumb img-wrap">
+              <div class="throbber" aria-hidden="true"></div>
+              <span class="project-sticker" style="--sticker-image: url('images/skills/elixir.svg');"
+                aria-hidden="true"></span>
+              <span class="project-sticker is-secondary" style="--sticker-image: url('images/skills/pheonix.svg');"
+                aria-hidden="true"></span>
+              <img src="images/powered-learning.png" alt="Powered-Learning project thumbnail" loading="lazy"
+                decoding="async">
+            </div>
+            <div class="work-body">
+              <span>Future Product</span>
+              <strong>Powered Learning</strong>
+              <p>Product to help students decide <i>what</i> to study, not just when.</p>
+            </div>
+          </a>
+        </article>
 
+        <!-- ACME -->
+        <article class="work-card reveal" style="--d: 0.25s">
+          <a href="https://github.com/BoxCosplayer/ACME-Furniture">
+            <div class="thumb img-wrap">
+              <div class="throbber" aria-hidden="true"></div>
+              <span class="project-sticker" style="--sticker-image: url('images/skills/csharp.svg');"
+                aria-hidden="true"></span>
+              <span class="project-sticker is-secondary" style="--sticker-image: url('images/skills/blazor.svg');"
+                aria-hidden="true"></span>
+              <img src="images/acme.png" alt="ACME Furniture project thumbnail" loading="lazy" decoding="async">
+            </div>
+            <div class="work-body">
+              <span>University Project</span>
+              <strong>ACME Furniture</strong>
+              <p>Mock shopping webapp, made to show off DevSecOps skills.</p>
+              <p>Deployed with Azure.</p>
+            </div>
+          </a>
+        </article>
+
+        <!-- Securecart -->
+        <article class="work-card reveal" style="--d: 0.25s">
+          <a href="https://github.com/BoxCosplayer/SecureCart">
+            <div class="thumb img-wrap">
+              <div class="throbber" aria-hidden="true"></div>
+              <span class="project-sticker" style="--sticker-image: url('images/skills/typescript.svg');"
+                aria-hidden="true"></span>
+              <span class="project-sticker is-secondary" style="--sticker-image: url('images/skills/nextjs.svg');"
+                aria-hidden="true"></span>
+              <img src="images/acme.png" alt="Secure Cart project thumbnail" loading="lazy" decoding="async">
+            </div>
+            <div class="work-body">
+              <span>University Project</span>
+              <strong>Secure Cart</strong>
+              <p>Mock shopping webapp, made to show off DevSecOps skills.</p>
+              <p>Deployed with Netlify.</p>
+            </div>
+          </a>
+        </article>
+
+        <!-- MySchoolPlanner -->
+        <article class="work-card reveal" style="--d: 0.25s">
+          <a href="https://github.com/BoxCosplayer/MySchoolPlanner">
+            <div class="thumb img-wrap">
+              <div class="throbber" aria-hidden="true"></div>
+              <span class="project-sticker" style="--sticker-image: url('images/skills/csharp.svg');"
+                aria-hidden="true"></span>
+              <span class="project-sticker is-secondary" style="--sticker-image: url('images/skills/aspdotnet.webp');"
+                aria-hidden="true"></span>
+              <img src="images/acme.png" alt="Secure Cart project thumbnail" loading="lazy" decoding="async">
+            </div>
+            <div class="work-body">
+              <span>HighSchool Project</span>
+              <strong>School Planner</strong>
+              <p>Management platform for teachers and students.</p>
+            </div>
+          </a>
+        </article>
+
+        <!-- This Site (Keep this as last one, easter egg!!) -->
+        <article class="work-card reveal" style="--d: 0.25s">
+          <a href="https://github.com/BoxCosplayer/portfolio-website">
+            <div class="thumb img-wrap">
+              <div class="throbber" aria-hidden="true"></div>
+              <span class="project-sticker" style="--sticker-image: url('images/skills/html5.svg');"
+                aria-hidden="true"></span>
+              <span class="project-sticker is-secondary" style="--sticker-image: url('images/skills/vercel.svg');"
+                aria-hidden="true"></span>
+              <img src="images/website.png" alt="Portfolio Website project thumbnail" loading="lazy" decoding="async">
+            </div>
+            <div class="work-body">
+              <span>Portfolio</span>
+              <strong>This Website! :3</strong>
+              <p>Site to show off my skills & projects, &lt;14kb.</p>
+              <p>Deployed using vercel.</p>
+            </div>
+          </a>
+        </article>
       </div>
     </section>
 
@@ -994,33 +1093,33 @@
 
     if (projectTrack && projectPrev && projectNext) {
       const epsilon = 4;
+      const getMaxScrollLeft = () => projectTrack.scrollWidth - projectTrack.clientWidth;
 
       const getScrollStep = () => {
         const card = projectTrack.querySelector(".work-card");
         if (!card) {
           return projectTrack.clientWidth;
         }
-        const gap = parseFloat(getComputedStyle(projectTrack).columnGap || "0");
+        const gapValue = parseFloat(getComputedStyle(projectTrack).columnGap || "0");
+        const gap = Number.isFinite(gapValue) ? gapValue : 0;
         return card.getBoundingClientRect().width + gap;
       };
 
-      const updateProjectButtons = () => {
-        const maxLeft = projectTrack.scrollWidth - projectTrack.clientWidth;
-        projectPrev.disabled = projectTrack.scrollLeft <= epsilon;
-        projectNext.disabled = projectTrack.scrollLeft >= maxLeft - epsilon;
-      };
-
       projectPrev.addEventListener("click", () => {
+        if (projectTrack.scrollLeft <= epsilon) {
+          projectTrack.scrollTo({ left: getMaxScrollLeft(), behavior: "smooth" });
+          return;
+        }
         projectTrack.scrollBy({ left: -getScrollStep(), behavior: "smooth" });
       });
 
       projectNext.addEventListener("click", () => {
+        if (projectTrack.scrollLeft >= getMaxScrollLeft() - epsilon) {
+          projectTrack.scrollTo({ left: 0, behavior: "smooth" });
+          return;
+        }
         projectTrack.scrollBy({ left: getScrollStep(), behavior: "smooth" });
       });
-
-      projectTrack.addEventListener("scroll", updateProjectButtons, { passive: true });
-      window.addEventListener("resize", updateProjectButtons);
-      updateProjectButtons();
     }
   </script>
 </body>
