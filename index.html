@@ -334,8 +334,35 @@
     }
 
     .thumb {
+      position: relative;
       height: 160px;
       background: linear-gradient(135deg, #f7b494, #f3c28e);
+    }
+
+    .project-sticker {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 2;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(229, 214, 199, 0);
+      border-radius: 10px;
+      background: rgba(255, 250, 244, 0);
+      box-shadow: 0 8px 14px rgba(192, 131, 26, 0);
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+    }
+
+    .project-sticker::before {
+      content: "";
+      width: 35px;
+      height: 35px;
+      background-image: var(--sticker-image);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
     }
 
     .work-body {
@@ -609,11 +636,14 @@
         <h2>Projects</h2>
       </div>
       <div class="work-grid">
+
         <!-- Goatpad -->
         <article class="work-card reveal" style="--d: 0.15s">
           <a href="https://github.com/BoxCosplayer/GOatpad">
             <div class="thumb img-wrap">
               <div class="throbber" aria-hidden="true"></div>
+              <span class="project-sticker" style="--sticker-image: url('images/skills/go.svg');"
+                aria-hidden="true"></span>
               <img src="images/goatpad.png" alt="Goatpad text-editor thumbnail" loading="lazy" decoding="async">
             </div>
             <div class="work-body">
@@ -629,6 +659,8 @@
           <a href="https://github.com/qiboteam/qiboopt">
             <div class="thumb img-wrap">
               <div class="throbber" aria-hidden="true"></div>
+              <span class="project-sticker" style="--sticker-image: url('images/skills/python.svg');"
+                aria-hidden="true"></span>
               <img src="images/qibo.png" alt="qibo project thumbnail" loading="lazy" decoding="async">
             </div>
             <div class="work-body">
@@ -645,12 +677,31 @@
           <a href="https://github.com/BoxCosplayer/go-search-engine">
             <div class="thumb img-wrap">
               <div class="throbber" aria-hidden="true"></div>
+              <span class="project-sticker" style="--sticker-image: url('images/skills/python.svg');"
+                aria-hidden="true"></span>
               <img src="images/go.png" alt="Go-search-engine project thumbnail" loading="lazy" decoding="async">
             </div>
             <div class="work-body">
               <span>Personal Project</span>
               <strong>Go Search Engine</strong>
               <p>Keyword->URL redirect engine.</p>
+            </div>
+          </a>
+        </article>
+
+        <!-- language server -->
+        <article class="work-card reveal" style="--d: 0.25s">
+          <a href="https://github.com/BoxCosplayer/go-language-server">
+            <div class="thumb img-wrap">
+              <div class="throbber" aria-hidden="true"></div>
+              <span class="project-sticker" style="--sticker-image: url('images/skills/cplusplus.svg');"
+                aria-hidden="true"></span>
+              <img src="images/lang-server.png" alt="Language Server project thumbnail" loading="lazy" decoding="async">
+            </div>
+            <div class="work-body">
+              <span>Personal Project</span>
+              <strong>Go Language Server</strong>
+              <p>Language Server for golang.</p>
             </div>
           </a>
         </article>
@@ -667,21 +718,6 @@
             <p>Product to help students decide <i>what</i> to study, not just when.</p>
           </div>
         </article> -->
-
-        <!-- language server -->
-        <article class="work-card reveal" style="--d: 0.25s">
-          <a href="https://github.com/BoxCosplayer/go-language-server">
-            <div class="thumb img-wrap">
-              <div class="throbber" aria-hidden="true"></div>
-              <img src="images/lang-server.png" alt="Language Server project thumbnail" loading="lazy" decoding="async">
-            </div>
-            <div class="work-body">
-              <span>Personal Project</span>
-              <strong>Go Language Server</strong>
-              <p>Language Server for golang.</p>
-            </div>
-          </a>
-        </article>
 
       </div>
     </section>
