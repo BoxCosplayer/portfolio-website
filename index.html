@@ -22,6 +22,7 @@
       --ink: #1e1b16;
       --muted: #5c5247;
       --line: #e5d6c7;
+      --headshot-bg: #e9af93;
     }
 
     * {
@@ -234,7 +235,7 @@
     .portrait {
       aspect-ratio: 4 / 5;
       border-radius: 18px;
-      background: linear-gradient(135deg, #f9c6a9, #f7a07c);
+      background: var(--headshot-bg);
       position: relative;
     }
 
@@ -242,6 +243,7 @@
       position: absolute;
       inset: 0;
       object-position: center;
+      background: var(--headshot-bg);
       transform: translateX(100%);
       opacity: 0;
       visibility: hidden;
@@ -264,7 +266,7 @@
 
     .portrait .headshot-slide.is-landscape {
       object-fit: contain;
-      background: #f1e4d7;
+      background: var(--headshot-bg);
     }
 
     .img-wrap {
