@@ -18,7 +18,7 @@
     :root {
       --bg: #f7f1e8;
       --accent: #fff3e8;
-      --orange: #f15a24;
+      --orange: #bf3f15;
       --ink: #1e1b16;
       --muted: #5c5247;
       --line: #e5d6c7;
@@ -44,7 +44,28 @@
 
     a {
       color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 0.14em;
+      text-decoration-thickness: 0.08em;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: #fffaf4;
+      color: var(--ink);
+      border: 2px solid var(--orange);
       text-decoration: none;
+      transform: translateY(-180%);
+      transition: transform 140ms ease;
+      z-index: 1000;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
     }
 
     .wrap {
@@ -91,7 +112,7 @@
 
     .hero {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 1.05fr 1.05fr;
       gap: 32px;
       align-items: start;
     }
@@ -210,6 +231,7 @@
       border: 1px solid var(--orange);
       font-weight: 600;
       font-size: 14px;
+      text-decoration: none;
     }
 
     .btn.primary {
@@ -233,7 +255,7 @@
     }
 
     .portrait {
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 5 / 5;
       border-radius: 18px;
       background: var(--headshot-bg);
       position: relative;
@@ -396,8 +418,8 @@
     }
 
     .carousel-btn {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       border: 1px solid var(--line);
       border-radius: 999px;
       background: #fffaf4;
@@ -499,6 +521,7 @@
       border: none;
       background: transparent;
       padding: 10px 16px;
+      min-height: 44px;
       border-radius: 999px;
       font-weight: 600;
       font-size: 13px;
@@ -613,6 +636,12 @@
       animation-delay: var(--d, 0s);
     }
 
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid var(--orange);
+      outline-offset: 2px;
+    }
+
     @keyframes rise {
       from {
         opacity: 0;
@@ -660,8 +689,9 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <!-- Header -->
-  <div class="wrap">
+  <main id="main-content" class="wrap">
     <nav class="nav reveal" style="--d: 0s">
       <div class="brand">
         <!-- Unsure whether to include this if at all, mostly for styling -->
@@ -923,20 +953,23 @@
       <div class="section-head reveal" style="--d: 0.1s">
         <h2>Timeline</h2>
       </div>
-      <div class="toggle reveal" style="--d: 0.15s" role="tablist">
-        <button class="is-active" data-target="experience" aria-controls="experience" aria-selected="true">
+      <div class="toggle reveal" style="--d: 0.15s" role="tablist" aria-label="Timeline categories">
+        <button id="tab-experience" class="is-active" data-target="experience" role="tab" aria-controls="experience"
+          aria-selected="true" tabindex="0">
           Experience
         </button>
-        <button data-target="extra" aria-controls="extra" aria-selected="false">
+        <button id="tab-extra" data-target="extra" role="tab" aria-controls="extra" aria-selected="false" tabindex="-1">
           Extracurriculars
         </button>
-        <button data-target="education" aria-controls="education" aria-selected="false">
+        <button id="tab-education" data-target="education" role="tab" aria-controls="education" aria-selected="false"
+          tabindex="-1">
           Education
         </button>
       </div>
 
       <!-- Experience section -->
-      <div class="panel reveal" style="--d: 0.2s" id="experience">
+      <div class="panel reveal" style="--d: 0.2s" id="experience" role="tabpanel" aria-labelledby="tab-experience"
+        tabindex="0">
 
         <!-- A*STAR -->
         <div class="item">
@@ -1019,7 +1052,8 @@
       </div>
 
       <!-- Extracurriculars section -->
-      <div class="panel reveal" style="--d: 0.2s" id="extra" hidden>
+      <div class="panel reveal" style="--d: 0.2s" id="extra" role="tabpanel" aria-labelledby="tab-extra" tabindex="0"
+        hidden>
         <!-- NATO -->
         <div class="item">
           <strong>NATO CA2X2 Forum 2025</strong>
@@ -1087,7 +1121,8 @@
       </div>
 
       <!-- Education section -->
-      <div class="panel reveal" style="--d: 0.2s" id="education" hidden>
+      <div class="panel reveal" style="--d: 0.2s" id="education" role="tabpanel" aria-labelledby="tab-education"
+        tabindex="0" hidden>
         <div class="item">
           <strong>BSc Cyber Security</strong>
           <span>University of Warwick | 2023 - 2027</span>
@@ -1111,7 +1146,7 @@
           this matter?</a></span>
       <span>United Kingdom, remote friendly.</span>
     </footer>
-  </div>
+  </main>
 
   <!-- JS -->
   <script>
@@ -1176,20 +1211,55 @@
       window.setTimeout(warmImageCache, 150);
     }, { once: true });
 
-    const tabs = document.querySelectorAll(".toggle button");
+    const tabs = document.querySelectorAll('[role="tab"]');
     const panels = document.querySelectorAll(".panel");
+    const activateTab = (tabToActivate, { focusPanel = false } = {}) => {
+      tabs.forEach((t) => {
+        const isActive = t === tabToActivate;
+        t.classList.toggle("is-active", isActive);
+        t.setAttribute("aria-selected", String(isActive));
+        t.setAttribute("tabindex", isActive ? "0" : "-1");
+      });
+
+      panels.forEach((panel) => panel.setAttribute("hidden", "true"));
+      const target = document.getElementById(tabToActivate.dataset.target);
+      if (target) {
+        target.removeAttribute("hidden");
+        if (focusPanel) {
+          target.focus();
+        }
+      }
+    };
+
+    const moveTabFocus = (currentTab, direction) => {
+      const tabList = [...tabs];
+      const currentIndex = tabList.indexOf(currentTab);
+      if (currentIndex < 0) {
+        return;
+      }
+
+      const nextIndex = (currentIndex + direction + tabList.length) % tabList.length;
+      tabList[nextIndex].focus();
+    };
+
     tabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        tabs.forEach((t) => {
-          t.classList.remove("is-active");
-          t.setAttribute("aria-selected", "false");
-        });
-        panels.forEach((panel) => panel.setAttribute("hidden", "true"));
-        tab.classList.add("is-active");
-        tab.setAttribute("aria-selected", "true");
-        const target = document.getElementById(tab.dataset.target);
-        if (target) {
-          target.removeAttribute("hidden");
+      tab.addEventListener("click", () => activateTab(tab));
+      tab.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          moveTabFocus(tab, 1);
+        } else if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          moveTabFocus(tab, -1);
+        } else if (event.key === "Home") {
+          event.preventDefault();
+          tabs[0]?.focus();
+        } else if (event.key === "End") {
+          event.preventDefault();
+          tabs[tabs.length - 1]?.focus();
+        } else if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          activateTab(tab, { focusPanel: true });
         }
       });
     });
