@@ -15,6 +15,46 @@
     document.documentElement.classList.add("js");
   </script>
   <style>
+    @font-face {
+      font-family: "Space Grotesk";
+      src: url("fonts/SpaceGrotesk-Latin.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 300 700;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Source Sans 3";
+      src: url("fonts/SourceSans3-Regular.ttf.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Source Sans 3";
+      src: url("fonts/SourceSans3-It.ttf.woff2") format("woff2");
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Source Sans 3";
+      src: url("fonts/SourceSans3-Semibold.ttf.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Source Sans 3";
+      src: url("fonts/SourceSans3-Bold.ttf.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+    }
+
     :root {
       --bg: #f7f1e8;
       --accent: #fff3e8;
@@ -22,7 +62,9 @@
       --ink: #1e1b16;
       --muted: #5c5247;
       --line: #e5d6c7;
-      --headshot-bg: #e9af93;
+      --headshot-bg: #f3c28e;
+      --font-heading: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+      --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
     }
 
     * {
@@ -31,15 +73,23 @@
 
     body {
       margin: 0;
-      font-family: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+      font-family: var(--font-body);
       color: var(--ink);
       background: var(--bg);
-      background-image: radial-gradient(900px 480px at 80% -20%,
-          rgba(241, 90, 36, 0.18),
-          transparent 60%),
-        radial-gradient(600px 420px at -10% 20%,
-          rgba(241, 90, 36, 0.08),
-          transparent 55%);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: var(--font-body);
+    }
+
+    h1,
+    h2,
+    h3,
+    .brand strong {
+      font-family: var(--font-heading);
     }
 
     a {
@@ -69,7 +119,7 @@
     }
 
     .wrap {
-      width: min(1080px, 92vw);
+      width: min(1500px, 90vw);
       margin: 0 auto;
       padding: 48px 0 80px;
     }
@@ -85,6 +135,12 @@
     .brand {
       display: grid;
       gap: 4px;
+    }
+
+    .intro-lockup {
+      display: flex;
+      align-items: stretch;
+      gap: 16px;
     }
 
     .brand span {
@@ -112,40 +168,41 @@
 
     .hero {
       display: grid;
-      grid-template-columns: 1.05fr 1.05fr;
-      gap: 32px;
-      align-items: start;
+      grid-template-columns: minmax(0, 1fr);
+      gap: clamp(24px, 3vw, 56px);
+      align-items: stretch;
     }
 
     @media (min-width: 861px) {
-      .hero-copy {
-        padding-top: 20px;
+      .eyebrow,
+      h1 {
+        white-space: nowrap;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr) clamp(330px, 27.5vw, 480px);
       }
     }
 
     .eyebrow {
       text-transform: uppercase;
       letter-spacing: 0.3em;
-      font-size: 11px;
+      font-size: 14px;
       color: var(--muted);
       margin: 0 0 14px;
     }
 
     h1 {
-      font-size: clamp(34px, 4.2vw, 48px);
+      font-size: clamp(30px, 2.3vw, 38px);
       line-height: 1.05;
       margin: 0 0 16px;
       margin-left: -3px;
     }
 
-    @media (min-width: 861px) {
-      h1 {
-        white-space: nowrap;
-      }
-    }
-
     .lede {
-      font-size: 17px;
+      font-size: clamp(15px, 1.25vw, 18px);
       color: var(--muted);
       margin: 0 0 24px;
     }
@@ -156,17 +213,114 @@
       gap: 12px;
     }
 
+    .hero-companies,
     .hero-skills {
       margin-top: 35px;
     }
 
-    .hero-skills p {
+    .hero-list-heading {
       margin: 0 0 10px;
       font-size: 12px;
+      line-height: 1.4;
       text-transform: uppercase;
       letter-spacing: 0.18em;
       color: var(--muted);
       font-weight: 600;
+    }
+
+    .company-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .company-list li {
+      min-height: 54px;
+    }
+
+    .company-card {
+      height: 54px;
+      display: grid;
+      grid-template-columns: 72px auto;
+      grid-template-rows: minmax(0, 1fr);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffdf9;
+      color: var(--muted);
+      overflow: hidden;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    }
+
+    .company-card:hover {
+      border-color: var(--orange);
+      box-shadow: 0 4px 14px rgba(119, 66, 33, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .company-card:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--orange) 45%, transparent);
+      outline-offset: 3px;
+    }
+
+    .company-logo,
+    .skill-logo {
+      width: 72px;
+      min-width: 72px;
+      display: grid;
+      place-items: center;
+      align-self: stretch;
+      padding: 8px;
+      border-right: 1px solid var(--line);
+      background: #ffffff;
+    }
+
+    .company-logo .company-logo-image,
+    .skill-logo .skill-logo-image {
+      width: 30px;
+      height: 30px;
+      max-width: 30px;
+      max-height: 30px;
+      object-fit: contain;
+      display: block;
+      transform: scale(1.12);
+      transform-origin: center;
+    }
+
+    .company-logo {
+      padding: 0;
+    }
+
+    .company-logo .company-logo-image {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transform: none;
+    }
+
+    .company-logo-placeholder {
+      font-size: 8px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    .company-name {
+      display: grid;
+      place-items: center;
+      min-height: 0;
+      padding: 0 14px;
+      font-size: 16px;
+      line-height: 1;
+      font-weight: 600;
+      color: var(--muted);
     }
 
     .skills-list {
@@ -187,27 +341,6 @@
       color: var(--ink);
       min-height: 54px;
       overflow: hidden;
-    }
-
-    .skill-logo {
-      width: 72px;
-      min-width: 72px;
-      display: grid;
-      place-items: center;
-      padding: 8px;
-      border-right: 1px solid var(--line);
-      background: #ffffff;
-    }
-
-    .skill-logo .skill-logo-image {
-      width: 30px;
-      height: 30px;
-      max-width: 30px;
-      max-height: 30px;
-      object-fit: contain;
-      display: block;
-      transform: scale(1.12);
-      transform-origin: center;
     }
 
     .skill-logo .throbber::after {
@@ -249,13 +382,15 @@
       border: 0;
       border-radius: 0;
       padding: 0;
-      display: grid;
-      gap: 12px;
       box-shadow: none;
+      position: relative;
+      min-height: 0;
     }
 
     .portrait {
-      aspect-ratio: 5 / 5;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
       border-radius: 18px;
       background: var(--headshot-bg);
       position: relative;
@@ -342,6 +477,9 @@
     }
 
     .card-meta {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
       display: flex;
       justify-content: flex-start;
       font-size: 12px;
@@ -404,6 +542,10 @@
       scroll-snap-align: start;
     }
 
+    .work-card > a {
+      text-decoration: none;
+    }
+
     .projects-head {
       align-items: center;
     }
@@ -446,8 +588,13 @@
 
     .thumb {
       position: relative;
-      height: 160px;
-      background: linear-gradient(135deg, #f7b494, #f3c28e);
+      height: auto;
+      aspect-ratio: 16 / 9;
+      background: #f3c28e;
+    }
+
+    .thumb img {
+      object-fit: contain;
     }
 
     .project-sticker {
@@ -550,6 +697,31 @@
       background: #fffaf4;
       display: grid;
       gap: 6px;
+      scroll-margin-top: 24px;
+      transition: border-color 240ms ease, background-color 240ms ease, box-shadow 240ms ease;
+    }
+
+    .item.is-highlighted {
+      border-color: var(--orange);
+      background: #fff0e4;
+      box-shadow: 0 0 0 4px rgba(196, 91, 40, 0.16);
+      animation: timeline-highlight-pulse 900ms ease-in-out infinite alternate;
+    }
+
+    @keyframes timeline-highlight-pulse {
+      from {
+        box-shadow: 0 0 0 4px rgba(196, 91, 40, 0.12);
+      }
+
+      to {
+        box-shadow: 0 0 0 7px rgba(196, 91, 40, 0.22);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .item.is-highlighted {
+        animation: none;
+      }
     }
 
     .item strong {
@@ -660,9 +832,23 @@
       }
     }
 
+    @media (max-width: 1279px) {
+      .portrait {
+        height: auto;
+        min-height: 0;
+        aspect-ratio: 16 / 9;
+      }
+    }
+
     @media (max-width: 860px) {
       .hero {
         grid-template-columns: 1fr;
+      }
+
+      .portrait {
+        height: auto;
+        min-height: 0;
+        aspect-ratio: 1;
       }
 
       .nav {
@@ -693,12 +879,14 @@
   <!-- Header -->
   <main id="main-content" class="wrap">
     <nav class="nav reveal" style="--d: 0s">
-      <div class="brand">
-        <!-- Unsure whether to include this if at all, mostly for styling -->
-        <!-- <span>Portfolio</span> -->
-        <strong>Rajveer Singh Sandhu</strong>
-        <span>Wolverhampton, United Kingdom</span>
-        <span>Open to relocate</span>
+      <div class="intro-lockup">
+        <div class="brand">
+          <!-- Unsure whether to include this if at all, mostly for styling -->
+          <!-- <span>Portfolio</span> -->
+          <strong>Rajveer Singh Sandhu</strong>
+          <span>Wolverhampton, United Kingdom</span>
+          <span>Open to relocating</span>
+        </div>
       </div>
       <div class="nav-links">
         <a href="mailto:rajveer@sandhuhome.uk">Email</a>
@@ -710,42 +898,102 @@
     <!-- Headline -->
     <section class="hero">
       <div class="hero-copy reveal" style="--d: 0.1s">
-        <p class="eyebrow">Aspiring Security Engineer</p>
-        <h1>Building software that works.</h1>
+        <p class="eyebrow">Software Engineering  &middot;  Cybersecurity Policy  &middot;  Quantum Computing Research</p>
+        <h1>Building secure products for what comes next.</h1>
         <p class="lede">
-          Working at the intersection between security, usability and functionality.
+          I develop security-focused software and explore emerging technical risks through engineering, research and policy.
         </p>
         <div class="actions">
           <a class="btn primary" href="mailto:rajveer@sandhuhome.uk">Get in touch</a>
-          <a class="btn ghost" href="CV.pdf">Download CV</a>
+          <!-- <a class="btn ghost" href="/blog">Read my blog</a> -->
+        </div>
+        <div class="hero-companies">
+          <h2 class="hero-list-heading">Featured Experience</h2>
+          <ul class="company-list" aria-label="Companies and organisations">
+            <li>
+              <a class="company-card" href="#timeline-nato" data-timeline-target="timeline-nato">
+                <span class="company-logo">
+                  <img class="company-logo-image" src="images/companies/Flag_of_NATO.svg.webp" alt="">
+                </span>
+                <span class="company-name">NATO CA2X2 Speaker</span>
+              </a>
+            </li>
+            <li>
+              <a class="company-card" href="#timeline-civil-service" data-timeline-target="timeline-civil-service">
+                <span class="company-logo">
+                  <img class="company-logo-image" src="images/companies/northern_ireland_civil_service_logo.webp" alt=""
+                    loading="lazy" decoding="async">
+                </span>
+                <span class="company-name">NI Civil Service Placement</span>
+              </a>
+            </li>
+            <li>
+              <a class="company-card" href="#timeline-astar" data-timeline-target="timeline-astar">
+                <span class="company-logo">
+                  <img class="company-logo-image" src="images/companies/astar.webp" alt="" loading="lazy"
+                    decoding="async">
+                </span>
+                <span class="company-name">A*STAR Researcher</span>
+              </a>
+            </li>
+            <li>
+              <a class="company-card" href="#timeline-qinetiq" data-timeline-target="timeline-qinetiq">
+                <span class="company-logo">
+                  <img class="company-logo-image" src="images/companies/qq.png" alt="" loading="lazy"
+                    decoding="async">
+                </span>
+                <span class="company-name">QinetiQ Placement</span>
+              </a>
+            </li>
+            <li>
+              <a class="company-card" href="#timeline-atlantic-council"
+                data-timeline-target="timeline-atlantic-council">
+                <span class="company-logo">
+                  <img class="company-logo-image" src="images/companies/Atlantic-Council.png" alt="" loading="lazy"
+                    decoding="async">
+                </span>
+                <span class="company-name">Atlantic Council 9/12 Participant</span>
+              </a>
+            </li>
+            <li>
+              <a class="company-card" href="#timeline-stem-ambassador"
+                data-timeline-target="timeline-stem-ambassador">
+                <span class="company-logo">
+                  <img class="company-logo-image" src="images/companies/STEM.webp" alt="" loading="lazy"
+                    decoding="async">
+                </span>
+                <span class="company-name">STEM Ambassador</span>
+              </a>
+            </li>
+          </ul>
         </div>
         <div class="hero-skills">
-          <p>Skills &amp; Technologies</p>
+          <h2 class="hero-list-heading">Proficiencies</h2>
           <ul class="skills-list">
             <li><span class="skill-logo img-wrap"><span class="throbber" aria-hidden="true"></span><img
                   class="skill-logo-image" src="images/skills/python.svg" alt="Python logo" loading="lazy"
                   decoding="async"></span><span class="skill-name">Python</span></li>
+
             <li><span class="skill-logo img-wrap"><span class="throbber" aria-hidden="true"></span><img
                   class="skill-logo-image" src="images/skills/go.svg" alt="Go logo" loading="lazy"
                   decoding="async"></span><span class="skill-name">Go</span></li>
-            <li><span class="skill-logo img-wrap"><span class="throbber" aria-hidden="true"></span><img
-                  class="skill-logo-image" src="images/skills/linux.svg" alt="Linux logo" loading="lazy"
-                  decoding="async"></span><span class="skill-name">Linux</span></li>
-            <li><span class="skill-logo img-wrap"><span class="throbber" aria-hidden="true"></span><img
-                  class="skill-logo-image" src="images/skills/git.svg" alt="Git logo" loading="lazy"
-                  decoding="async"></span><span class="skill-name">Git</span></li>
-            <li><span class="skill-logo img-wrap"><span class="throbber" aria-hidden="true"></span><img
-                  class="skill-logo-image" src="images/skills/cplusplus.svg" alt="C++ logo" loading="lazy"
-                  decoding="async"></span><span class="skill-name">C++</span></li>
+                
             <li><span class="skill-logo img-wrap"><span class="throbber" aria-hidden="true"></span><img
                   class="skill-logo-image" src="images/skills/csharp.svg" alt="C# logo" loading="lazy"
                   decoding="async"></span><span class="skill-name">C#</span></li>
+
+            <li><span class="skill-logo img-wrap"><span class="throbber" aria-hidden="true"></span><img
+                  class="skill-logo-image" src="images/skills/cplusplus.svg" alt="C++ logo" loading="lazy"
+                  decoding="async"></span><span class="skill-name">C++</span></li>
+
             <li><span class="skill-logo img-wrap"><span class="throbber" aria-hidden="true"></span><img
                   class="skill-logo-image" src="images/skills/sqlite.svg" alt="sql logo" loading="lazy"
                   decoding="async"></span><span class="skill-name">SQL</span></li>
+
             <li><span class="skill-logo img-wrap"><span class="throbber" aria-hidden="true"></span><img
-                  class="skill-logo-image" src="images/skills/elixir.svg" alt="Elixir logo" loading="lazy"
-                  decoding="async"></span><span class="skill-name">Elixir</span></li>
+                  class="skill-logo-image" src="images/skills/linux.svg" alt="Linux logo" loading="lazy"
+                  decoding="async"></span><span class="skill-name">Linux</span></li>
+
           </ul>
         </div>
       </div>
@@ -774,23 +1022,6 @@
       </div>
       <div class="work-grid" data-project-track>
 
-        <!-- Goatpad -->
-        <article class="work-card reveal" style="--d: 0.15s">
-          <a href="https://github.com/BoxCosplayer/GOatpad">
-            <div class="thumb img-wrap">
-              <div class="throbber" aria-hidden="true"></div>
-              <span class="project-sticker" style="--sticker-image: url('images/skills/go.svg');"
-                aria-hidden="true"></span>
-              <img src="images/goatpad.png" alt="Goatpad text-editor thumbnail" loading="lazy" decoding="async">
-            </div>
-            <div class="work-body">
-              <span>Personal Project</span>
-              <strong>GOatpad</strong>
-              <p>Vim-like text editor.</p>
-            </div>
-          </a>
-        </article>
-
         <!-- qiboopt -->
         <article class="work-card reveal" style="--d: 0.2s">
           <a href="https://github.com/qiboteam/qiboopt">
@@ -803,28 +1034,26 @@
             <div class="work-body">
               <span>Open Source</span>
               <strong>qiboopt Python library</strong>
-              <p>The quantum optimisation library.</p>
-              <p>More info: https://qibo.science.</p>
+              <p>Open-source quantum optimisation tools.</p>
+              <p>Contributed to the Qibo ecosystem at A*STAR.</p>
             </div>
           </a>
         </article>
 
-        <!-- Go Search Engine -->
-        <article class="work-card reveal" style="--d: 0.25s">
-          <a href="https://github.com/BoxCosplayer/go-search-engine">
+        <!-- Goatpad -->
+        <article class="work-card reveal" style="--d: 0.15s">
+          <a href="https://github.com/BoxCosplayer/GOatpad">
             <div class="thumb img-wrap">
               <div class="throbber" aria-hidden="true"></div>
-              <span class="project-sticker" style="--sticker-image: url('images/skills/python.svg');"
+              <span class="project-sticker" style="--sticker-image: url('images/skills/go.svg');"
                 aria-hidden="true"></span>
-              <span class="project-sticker is-secondary" style="--sticker-image: url('images/skills/docker.svg');"
-                aria-hidden="true"></span>
-              <img src="images/go.png" alt="Go-search-engine project thumbnail" loading="lazy" decoding="async">
+              <img src="images/goatpad.png" alt="Goatpad text-editor thumbnail" loading="lazy" decoding="async">
             </div>
             <div class="work-body">
               <span>Personal Project</span>
-              <strong>Go Search Engine</strong>
-              <p>Keyword->URL redirect engine.</p>
-              <p>Deployed with Docker.</p>
+              <strong>GOatpad</strong>
+              <p>A Vim-inspired terminal text editor built in Go.</p>
+              <p>Designed around modal editing and keyboard-first navigation.</p>
             </div>
           </a>
         </article>
@@ -841,27 +1070,8 @@
             <div class="work-body">
               <span>Personal Project</span>
               <strong>Go Language Server</strong>
-              <p>Language Server for golang.</p>
-            </div>
-          </a>
-        </article>
-
-        <!-- Powered Learning -->
-        <article class="work-card reveal" style="--d: 0.25s">
-          <a href="https://github.com/BoxCosplayer/Powered-Learning">
-            <div class="thumb img-wrap">
-              <div class="throbber" aria-hidden="true"></div>
-              <span class="project-sticker" style="--sticker-image: url('images/skills/elixir.svg');"
-                aria-hidden="true"></span>
-              <span class="project-sticker is-secondary" style="--sticker-image: url('images/skills/pheonix.svg');"
-                aria-hidden="true"></span>
-              <img src="images/powered-learning.png" alt="Powered-Learning project thumbnail" loading="lazy"
-                decoding="async">
-            </div>
-            <div class="work-body">
-              <span>Future Product</span>
-              <strong>Powered Learning</strong>
-              <p>Product to help students decide <i>what</i> to study, not just when.</p>
+              <p>An experimental language server written in c++.</p>
+              <p>Implements editor communication through the Language Server Protocol.</p>
             </div>
           </a>
         </article>
@@ -880,11 +1090,51 @@
             <div class="work-body">
               <span>University Project</span>
               <strong>ACME Furniture</strong>
-              <p>Mock shopping webapp, made to show off DevSecOps skills.</p>
-              <p>Deployed with Azure.</p>
+              <p>A secure ASP.NET shopping application built to demonstrate DevSecOps practices.</p>
+              <p>Deployed to Microsoft Azure.</p>
             </div>
           </a>
         </article>
+
+        <!-- Go Search Engine -->
+        <article class="work-card reveal" style="--d: 0.25s">
+          <a href="https://github.com/BoxCosplayer/go-search-engine">
+            <div class="thumb img-wrap">
+              <div class="throbber" aria-hidden="true"></div>
+              <span class="project-sticker" style="--sticker-image: url('images/skills/python.svg');"
+                aria-hidden="true"></span>
+              <span class="project-sticker is-secondary" style="--sticker-image: url('images/skills/docker.svg');"
+                aria-hidden="true"></span>
+              <img src="images/go.png" alt="Go-search-engine project thumbnail" loading="lazy" decoding="async">
+            </div>
+            <div class="work-body">
+              <span>Personal Project</span>
+              <strong>Go Search Engine</strong>
+              <p>A browser keyword redirect tool written in python.</p>
+              <p>Containerised with Docker for simple deployment.</p>
+            </div>
+          </a>
+        </article>
+
+        <!-- Powered Learning -->
+        <!-- <article class="work-card reveal" style="--d: 0.25s">
+          <a href="https://github.com/BoxCosplayer/Powered-Learning">
+            <div class="thumb img-wrap">
+              <div class="throbber" aria-hidden="true"></div>
+              <span class="project-sticker" style="--sticker-image: url('images/skills/elixir.svg');"
+                aria-hidden="true"></span>
+              <span class="project-sticker is-secondary" style="--sticker-image: url('images/skills/pheonix.svg');"
+                aria-hidden="true"></span>
+              <img src="images/powered-learning.png" alt="Powered-Learning project thumbnail" loading="lazy"
+                decoding="async">
+            </div>
+            <div class="work-body">
+              <span>Future Product</span>
+              <strong>Powered Learning</strong>
+              <p>Product to help students decide <i>what</i> to study, not just when.</p>
+            </div>
+          </a>
+        </article> -->
 
         <!-- Securecart -->
         <!-- <article class="work-card reveal" style="--d: 0.25s">
@@ -919,9 +1169,10 @@
                 decoding="async">
             </div>
             <div class="work-body">
-              <span>HighSchool Project</span>
+              <span>high-school Project</span>
               <strong>School Planner</strong>
-              <p>Management platform for teachers and students.</p>
+              <p>A school management platform for teachers and students.</p>
+              <p>Built with ASP.NET, C# and Microsoft SQL Server.</p>
             </div>
           </a>
         </article>
@@ -933,15 +1184,13 @@
               <div class="throbber" aria-hidden="true"></div>
               <span class="project-sticker" style="--sticker-image: url('images/skills/html5.svg');"
                 aria-hidden="true"></span>
-              <span class="project-sticker is-secondary" style="--sticker-image: url('images/skills/vercel.svg');"
-                aria-hidden="true"></span>
               <img src="images/website.png" alt="Portfolio Website project thumbnail" loading="lazy" decoding="async">
             </div>
             <div class="work-body">
               <span>Portfolio</span>
-              <strong>This Website! :3</strong>
-              <p>Site to show off my skills & projects, &lt;14kb.</p>
-              <p>Deployed with vercel.</p>
+              <strong>sandhuhome.net</strong>
+              <p>A lightweight portfolio built with HTML and CSS.</p>
+              <p>Designed to showcase my work, experience and writing.</p>
             </div>
           </a>
         </article>
@@ -972,34 +1221,45 @@
         tabindex="0">
 
         <!-- A*STAR -->
-        <div class="item">
+        <div class="item" id="timeline-civil-service">
+          <strong> Security Analyst Placement Student, Northern Ireland Civil Service
+          </strong>
+          <span>July 2026 - Current | Remote</span>
+          <p>Supported the team’s vulnerability-management processes through automated security testing, tooling evaluation and workflow improvement.</p>
+          <ul>
+            <li>Triaged automated vulnerability findings across thousands of assets, helping prioritise remediation while minimising disruption.</li>
+            <li>Developed a security-testing framework aligned with the OWASP Top 10 and created a comprehensive test suite within Azure DevOps.</li>
+            <li>Delivered a Burp Suite demonstration to team leadership, covering advanced testing workflows, reusable configurations and practical use cases.</li>
+          </ul>
+        </div>
+
+        <!-- A*STAR -->
+        <div class="item" id="timeline-astar">
           <strong> A*STAR Institute of High Performance Computing | Singapore International Pre-Graduate Awardee
           </strong>
-          <span>October 2025 - Current | Singapore</span>
-          <p>Recipient of the prestigious <b>SIPGA</b>, giving me paid research experience in
-            Singapore.</p>
+          <span>October 2025 - May 2026 | Singapore</span>
+          <p>Recipient of <b>SIPGA</b>, a competitive, funded research attachment awarded by Singapore’s national research agency.</p>
           <ul>
-            <li>Worked on a variety of optimisation projects, pushing the <b>quantum advantage domain</b> in AI and
-              Encryption.
+            <li>Contributed to optimisation projects exploring applications of quantum computing in AI and encryption.
             </li>
-            <li>Compiled research across a multitude of quantum products, analysing and improving their optimisation
+            <li>Compiled research across 3 different quantum products, analysing and improving their optimisation
               implementations</li>
-            <li>Engineered small internal tools and tutorials to express capabilities to potential customers.</li>
+            <li>Engineered small internal tools and tutorials to demonstrate capabilities to potential customers.</li>
           </ul>
         </div>
 
         <!-- Anon -->
         <div class="item">
           <strong>Security Engineering Intern</strong>
-          <span>June - September 2025 | Cheltenham, United Kindom</span>
-          <p>Team Software Development project to build a python client for a mobile service using capture data.</p>
+          <span>June - September 2025 | Cheltenham, United Kingdom</span>
+          <p>Team Software Development project to build a Python client for a mobile service using capture data.</p>
           <ul>
-            <li>Headlined consistent meetings with seniors and team members to discuss progress.
+            <li>Led regular meetings with leadership and team members to discuss progress.
             </li>
             <li>Followed <b>key agile principles</b> while working with delivery teams to ensure business compliance
               standards.
             </li>
-            <li>Maintained and Expanded core business infrastructure to expand testing capabilities.</li>
+            <li>Expanded business infrastructure to support extended testing capabilities.</li>
           </ul>
         </div>
 
@@ -1014,22 +1274,20 @@
             </li>
             <li>Developed personalized tutoring programs, focusing on student needs and academic goals across STEM and
               other core subjects.</li>
-            <li>Engaged in marketing and client acquisition, successfully growing the business with <b>social media
-                optimisation</b>.</li>
           </ul>
         </div>
 
         <!-- QQ -->
-        <div class="item">
+        <div class="item" id="timeline-qinetiq">
           <strong>Cyber Summer Placement Student, QinetiQ </strong>
           <span>June - September 2024 | Malvern, United Kingdom</span>
-          <p>Co-founded a tutoring business focused on providing personalized, high-quality academic support.</p>
+          <p>Researched and evaluated upcoming quantum computing technologies in alignment with business requirements.</p>
           <ul>
             <li>Constructed and presented a report on the viability of Quantum Photonics for machine learning
               algorithms.
             </li>
             <li>Developed QAOA solutions to solve <b>binary optimisation problems</b>.</li>
-            <li>Investigated and realised the potential of a multitude of quantum computing technologies.</li>
+            <li>Investigated and tested the potential of a multitude of quantum computing technologies.</li>
           </ul>
         </div>
 
@@ -1045,7 +1303,7 @@
             <li>Designed and conducted workshops to educate other researchers on online tracking and data privacy
               rights.
             </li>
-            <li>Acquired a MOOC in Online Tracking, Data Privacy and Rights to Privacy Online.</li>
+            <li>Completed a MOOC in Online Tracking, Data Privacy and Rights to Privacy Online.</li>
           </ul>
         </div>
 
@@ -1055,24 +1313,24 @@
       <div class="panel reveal" style="--d: 0.2s" id="extra" role="tabpanel" aria-labelledby="tab-extra" tabindex="0"
         hidden>
         <!-- NATO -->
-        <div class="item">
+        <div class="item" id="timeline-nato">
           <strong>NATO CA2X2 Forum 2025</strong>
           <span>September 2025</span>
           <p>Delivered a presentation about the intersection of <b>LLMs and decision-making</b> at NATO CA2X2 Forum
             2025.</p>
           <ul>
-            <li>Briefed NATO members for the upcoming integration between AI and critical decision-making within MDO.
+            <li>Presented at a NATO forum on the upcoming integration between AI and critical decision-making within MDO.
             </li>
-            <li>Delivered a professional presentation to 100s of people & excelled utilising key networking
+            <li>Delivered a professional presentation to under a thousand people, utilising key networking
               opportunities.</li>
             <li>Continuously kept engagement & accessibility in mind, minimising information density.</li>
           </ul>
         </div>
 
         <!-- STEM Ambassador -->
-        <div class="item">
+        <div class="item" id="timeline-stem-ambassador">
           <strong>UK STEM Ambassador & Mentor</strong>
-          <span>September 2024 - February 2025</span>
+          <span>September 2024 - Current</span>
           <p>Inspired and supported young learners in STEM fields within my local community.</p>
           <ul>
             <li>Delivered <b>engaging workshops, hands-on experiments, and coding sessions</b> to foster practical
@@ -1085,19 +1343,18 @@
         </div>
 
         <!-- Geneva 9/12 Challenge -->
-        <div class="item">
-          <strong>International Cyber 9/12 Strategy Challenge, Geneva</strong>
+        <div class="item" id="timeline-atlantic-council">
+          <strong>International Cyber 9/12 Strategy Challenge</strong>
           <span>Jan - April 2024</span>
           <p>Competed in two international cyber security challenges run by the Atlantic Council.</p>
           <ul>
             <li>Collaborated with <b>University and Government officials</b> to synthesize potential new cyber policies
-              among
-              fictional crises.
+              in response to fictional crisis scenarios.
             </li>
             <li>Acquainted myself with <b>international security policies and regulations</b> to develop informed and
               strategic
               recommendations.</li>
-            <li>Reached the Semi-final round in the Geneva Challenge and Quarter-Final in the UK Challenge.</li>
+            <li>Reached the Semi-final round in the Geneva (Global) Challenge and Quarter-Final in the UK Challenge.</li>
           </ul>
         </div>
 
@@ -1129,10 +1386,10 @@
           <ul>
             <li>Explored how to <b>design, build and maintain</b> secure systems.</li>
             <li>Worked with and secured large-scale networks, databases and web applications.</li>
-            <li>Designed bespoke <b>cyber policy and risk assurance</b> designs for fictional companies.</li>
+            <li>Designed bespoke <b>cyber policy and risk assurance</b> plans for fictional companies.</li>
             <li>Deeply analysed the human factor within cyber, focusing on the psychology behind risks and attacks.</li>
             <li>Evaluated the cyber posture of an organisation’s <b>cyber security management</b>.</li>
-            <li>Proposed a theory-informed intervention appraising the role of human factors in delivering security.
+            <li>Proposed a theory-informed intervention to elevate the role of human factors in delivering security.
             </li>
 
           </ul>
@@ -1154,10 +1411,6 @@
       {
         src: "images/headshot-portrait.webp",
         alt: "Portrait of Rajveer Singh Sandhu"
-      },
-      {
-        src: "images/headshot-mii.png",
-        alt: "Mii-style portrait of Rajveer Singh Sandhu"
       },
       {
         src: "images/headshot-nato.webp",
@@ -1261,6 +1514,48 @@
           event.preventDefault();
           activateTab(tab, { focusPanel: true });
         }
+      });
+    });
+
+    const timelineLinks = document.querySelectorAll("[data-timeline-target]");
+    let timelineHighlightTimer;
+    const navigateToTimelineItem = (targetId) => {
+      const target = document.getElementById(targetId);
+      if (!target) {
+        return;
+      }
+
+      const panel = target.closest(".panel");
+      const panelTab = panel
+        ? [...tabs].find((tab) => tab.dataset.target === panel.id)
+        : null;
+
+      if (panelTab) {
+        activateTab(panelTab);
+      }
+
+      window.requestAnimationFrame(() => {
+        window.clearTimeout(timelineHighlightTimer);
+        document
+          .querySelectorAll(".item.is-highlighted")
+          .forEach((item) => item.classList.remove("is-highlighted"));
+        target.classList.add("is-highlighted");
+
+        target.scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+          block: "start"
+        });
+
+        timelineHighlightTimer = window.setTimeout(() => {
+          target.classList.remove("is-highlighted");
+        }, 2000);
+      });
+    };
+
+    timelineLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        navigateToTimelineItem(link.dataset.timelineTarget);
       });
     });
 
